@@ -39,17 +39,18 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         
-        /* --- ESTILO DAS FOTOS DA EQUIPE (Para PNG) --- */
+        /* --- ESTILO DAS FOTOS DA EQUIPE (AJUSTADO) --- */
         .profile-img {
             width: 260px;
             height: 260px;
-            object-fit: cover; /* Ajusta a imagem para cobrir o círculo/quadrado */
-            object-position: top center; /* Foca no rosto */
+            /* MUDANÇA AQUI: 'contain' garante que a imagem NUNCA seja cortada */
+            object-fit: contain; 
+            object-position: center;
             border-radius: 20px;
             border: 4px solid white;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             transition: transform 0.3s;
-            background-color: #e2e8f0; /* Fundo cinza caso o PNG seja transparente */
+            background-color: #ffffff; /* Fundo branco para preencher espaços vazios */
         }
         
         /* Destaque para o Sócio do Centro */
@@ -62,28 +63,47 @@
 
         .profile-card:hover .profile-img { transform: scale(1.03); }
 
-        /* --- CARROSSEL INFINITO --- */
+        /* --- CARROSSEL INFINITO (GERAL) --- */
         .marquee-container { overflow: hidden; white-space: nowrap; position: relative; }
+        
+        /* Animação para a esquerda */
         .marquee-content { display: inline-flex; animation: marquee 30s linear infinite; }
+        
+        /* Animação para a direita (opcional, para variar) */
+        .marquee-content-reverse { display: inline-flex; animation: marquee-rev 35s linear infinite; }
+
+        /* Item Quadrado (Artes) */
         .marquee-item {
             width: 280px; height: 280px; margin-right: 20px;
             border-radius: 16px; overflow: hidden; flex-shrink: 0;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             background: white;
         }
-        .marquee-item img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* Item Vertical (Audiovisual/Stories) - NOVO */
+        .marquee-item-vertical {
+            width: 280px; height: 370px; /* Mais alto para formato retrato */
+            margin-right: 20px;
+            border-radius: 16px; overflow: visible; flex-shrink: 0; /* Visible para mostrar a sombra/efeito */
+            /* box-shadow removido aqui pois o photo-frame já tem */
+        }
+
+        .marquee-item img, .marquee-item-vertical img { width: 100%; height: 100%; object-fit: cover; }
         
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes marquee-rev { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 
-        /* --- GALERIA DE FOTOS --- */
-        .photo-frame { position: relative; z-index: 1; transition: transform 0.3s ease; }
+        /* --- GALERIA DE FOTOS (EFEITO MOLDURA) --- */
+        .photo-frame { position: relative; z-index: 1; transition: transform 0.3s ease; width: 100%; height: 100%; }
         .photo-frame img { position: relative; z-index: 2; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .photo-bg {
-            position: absolute; top: 15px; left: 15px; width: 100%; height: 100%;
+            position: absolute; top: 10px; left: 10px; width: 100%; height: 100%;
             border-radius: 12px; z-index: 0; transition: all 0.3s ease;
         }
-        .photo-frame:hover { transform: translate(-5px, -5px); }
-        .photo-frame:hover .photo-bg { transform: translate(10px, 10px); }
+        /* Ajuste do hover para o carrossel */
+        .marquee-item-vertical:hover .photo-frame { transform: translate(-3px, -3px); }
+        .marquee-item-vertical:hover .photo-bg { transform: translate(6px, 6px); }
+        
         .bg-custom-blue { background-color: #0f172a; }
         .bg-custom-green { background-color: #16a34a; }
 
@@ -235,7 +255,8 @@
                 <p class="text-gray-500 mt-4">Criatividade que converte.</p>
             </div>
 
-            <div class="mb-24">
+            <div class="mb-12">
+                <h3 class="text-center text-gray-500 text-sm uppercase tracking-widest font-bold mb-6">Social Media & Design</h3>
                 <div class="marquee-container w-full py-4">
                     <div class="marquee-content">
                         <div class="marquee-item"><img src="arte1.png" alt="Arte 1"></div>
@@ -250,23 +271,63 @@
                 </div>
             </div>
 
-            <div class="container mx-auto px-4 max-w-5xl">
-                <h3 class="text-xl font-bold text-slate-700 mb-10 flex items-center gap-2 justify-center">
-                    <i class="fa-solid fa-camera text-green-600"></i> Produção Audiovisual
-                </h3>
+            <div class="mb-24">
+                <h3 class="text-center text-gray-500 text-sm uppercase tracking-widest font-bold mb-6">Produção Audiovisual</h3>
+                
+                <div class="marquee-container w-full py-4">
+                    <div class="marquee-content-reverse"> <div class="marquee-item-vertical">
+                            <div class="photo-frame">
+                                <div class="photo-bg bg-custom-green"></div>
+                                <img src="foto1.png" alt="Foto 1">
+                            </div>
+                        </div>
+                        
+                        <div class="marquee-item-vertical">
+                            <div class="photo-frame">
+                                <div class="photo-bg bg-custom-blue"></div>
+                                <img src="foto2.png" alt="Foto 2">
+                            </div>
+                        </div>
+                        
+                        <div class="marquee-item-vertical">
+                            <div class="photo-frame">
+                                <div class="photo-bg bg-custom-green"></div>
+                                <img src="foto3.png" alt="Foto 3">
+                            </div>
+                        </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-                    <div class="photo-frame w-full aspect-[3/4]">
-                        <div class="photo-bg bg-custom-green"></div>
-                        <img src="foto1.png" class="w-full h-full object-cover" alt="Foto 1">
-                    </div>
-                    <div class="photo-frame w-full aspect-[3/4] md:mt-8">
-                        <div class="photo-bg bg-custom-blue"></div>
-                        <img src="foto2.png" class="w-full h-full object-cover" alt="Foto 2">
-                    </div>
-                    <div class="photo-frame w-full aspect-[3/4]">
-                        <div class="photo-bg bg-custom-green"></div>
-                        <img src="foto3.png" class="w-full h-full object-cover" alt="Foto 3">
+                         <div class="marquee-item-vertical">
+                            <div class="photo-frame">
+                                <div class="photo-bg bg-custom-blue"></div>
+                                <img src="foto1.png" alt="Foto 1">
+                            </div>
+                        </div>
+
+                        <div class="marquee-item-vertical">
+                            <div class="photo-frame">
+                                <div class="photo-bg bg-custom-green"></div>
+                                <img src="foto1.png" alt="Foto 1">
+                            </div>
+                        </div>
+                        <div class="marquee-item-vertical">
+                            <div class="photo-frame">
+                                <div class="photo-bg bg-custom-blue"></div>
+                                <img src="foto2.png" alt="Foto 2">
+                            </div>
+                        </div>
+                        <div class="marquee-item-vertical">
+                            <div class="photo-frame">
+                                <div class="photo-bg bg-custom-green"></div>
+                                <img src="foto3.png" alt="Foto 3">
+                            </div>
+                        </div>
+                        <div class="marquee-item-vertical">
+                            <div class="photo-frame">
+                                <div class="photo-bg bg-custom-blue"></div>
+                                <img src="foto1.png" alt="Foto 1">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
