@@ -14,16 +14,51 @@
         body { font-family: 'Open Sans', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
         h1, h2, h3, .font-title { font-family: 'Montserrat', sans-serif; }
         
-        /* Cores da Marca */
         :root {
             --azi-primary: #0f172a;
             --azi-accent: #16a34a;
         }
 
-        /* Scroll Suave */
         html { scroll-behavior: smooth; }
 
-        /* Estilo dos Cards de Serviço */
+        /* --- LIGHTBOX (ZOOM NA IMAGEM) --- */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+            object-fit: contain;
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        #lightbox-close:hover { transform: scale(1.2); color: #16a34a; }
+
+        /* --- CARDS SERVIÇO --- */
         .service-card { transition: all 0.3s ease; }
         .service-card:hover {
             transform: translateY(-5px);
@@ -31,7 +66,6 @@
             border-color: var(--azi-accent);
         }
 
-        /* Checkbox Personalizado */
         .checkbox-wrapper input:checked + div {
             background-color: #f0fdf4;
             border-color: var(--azi-accent);
@@ -39,76 +73,71 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         
-        /* --- ESTILO DAS FOTOS DA EQUIPE (REVERTIDO PARA O ORIGINAL) --- */
+        /* --- FOTOS EQUIPE (Mantido Original) --- */
         .profile-img {
-            width: 260px;
-            height: 260px;
-            /* REVERTIDO: 'cover' preenche todo o espaço (pode cortar bordas, mas fica cheio) */
-            object-fit: cover; 
-            object-position: top center; /* Foca no rosto */
+            width: 260px; height: 260px;
+            object-fit: cover; /* Mantido cover para preencher o círculo */
+            object-position: top center;
             border-radius: 20px;
             border: 4px solid white;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             transition: transform 0.3s;
             background-color: #e2e8f0; 
         }
-        
-        /* Destaque para o Sócio do Centro */
         .profile-img-center {
-            width: 300px;
-            height: 300px;
+            width: 300px; height: 300px;
             border-color: #16a34a;
             z-index: 10;
         }
-
         .profile-card:hover .profile-img { transform: scale(1.03); }
 
-        /* --- CARROSSEL INFINITO (GERAL) --- */
+        /* --- CARROSSEL INFINITO (AJUSTADO) --- */
         .marquee-container { overflow: hidden; white-space: nowrap; position: relative; }
-        
-        /* Animação para a esquerda */
-        .marquee-content { display: inline-flex; animation: marquee 30s linear infinite; }
-        
-        /* Animação para a direita (Reversa) */
-        .marquee-content-reverse { display: inline-flex; animation: marquee-rev 35s linear infinite; }
+        .marquee-content { display: inline-flex; animation: marquee 40s linear infinite; }
+        .marquee-container:hover .marquee-content { animation-play-state: paused; }
 
-        /* Item Quadrado (Artes) */
+        /* Item do Carrossel (Geral) */
         .marquee-item {
-            width: 280px; height: 280px; margin-right: 20px;
-            border-radius: 16px; overflow: hidden; flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            background: white;
-        }
-        
-        /* Item Vertical (Audiovisual/Stories) - ROLANDO */
-        .marquee-item-vertical {
-            width: 280px; height: 370px; /* Mais alto para formato retrato */
             margin-right: 20px;
-            border-radius: 16px; overflow: visible; flex-shrink: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #f1f5f9; /* Fundo cinza claro para destacar a imagem */
+            border: 1px solid #e2e8f0;
+            cursor: zoom-in; /* Cursor de lupa */
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+        .marquee-item:hover { transform: scale(1.02); border-color: #16a34a; }
 
-        .marquee-item img, .marquee-item-vertical img { width: 100%; height: 100%; object-fit: cover; }
+        /* Tamanho para Artes (Quadrado/Retangular) */
+        .item-design { width: 300px; height: 300px; }
+
+        /* Tamanho para Audiovisual (Horizontal/Paisagem) */
+        .item-audiovisual { width: 400px; height: 225px; } /* Proporção 16:9 */
+
+        /* IMAGEM DENTRO DO PORTFÓLIO - SEM CORTES */
+        .marquee-item img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; /* Garante que a imagem inteira apareça */
+            padding: 4px; /* Pequena margem interna */
+        }
         
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        @keyframes marquee-rev { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 
-        /* --- GALERIA DE FOTOS (EFEITO MOLDURA) --- */
-        .photo-frame { position: relative; z-index: 1; transition: transform 0.3s ease; width: 100%; height: 100%; }
-        .photo-frame img { position: relative; z-index: 2; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        .photo-bg {
-            position: absolute; top: 10px; left: 10px; width: 100%; height: 100%;
-            border-radius: 12px; z-index: 0; transition: all 0.3s ease;
-        }
-        /* Ajuste do hover para o carrossel */
-        .marquee-item-vertical:hover .photo-frame { transform: translate(-3px, -3px); }
-        .marquee-item-vertical:hover .photo-bg { transform: translate(6px, 6px); }
-        
         .bg-custom-blue { background-color: #0f172a; }
         .bg-custom-green { background-color: #16a34a; }
-
     </style>
 </head>
 <body class="text-slate-800">
+
+    <div id="lightbox" onclick="closeLightbox(event)">
+        <span id="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Zoom">
+    </div>
 
     <nav class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
@@ -142,7 +171,7 @@
                 <a href="#orcamento" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg transition shadow-green-500/30 shadow-lg">
                     Ver Pacotes
                 </a>
-                <a href="https://wa.me/5563993013005" target="_blank" class="border border-gray-600 hover:bg-gray-800 text-gray-300 font-semibold py-3 px-8 rounded-lg transition">
+                <a href="https://wa.me/5563999999999" target="_blank" class="border border-gray-600 hover:bg-gray-800 text-gray-300 font-semibold py-3 px-8 rounded-lg transition">
                     Falar no WhatsApp
                 </a>
             </div>
@@ -160,7 +189,7 @@
                 <div class="profile-card group order-2 md:order-1 relative md:top-4">
                     <div class="relative mx-auto mb-4">
                         <img src="foto_kaio.png" onerror="this.src='https://via.placeholder.com/260x260?text=Kaio'" alt="Kaio Azevedo" class="profile-img">
-                        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white px-4 py-1 rounded-full shadow-md text-xs font-bold text-slate-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Sócio Proprietário</div>
+                        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white px-4 py-1 rounded-full shadow-md text-xs font-bold text-slate-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Sócio Fundador</div>
                     </div>
                     <h4 class="text-xl font-bold text-slate-900">Kaio Azevedo</h4>
                     <p class="text-sm text-green-600 font-semibold">Comercial & Operações</p>
@@ -169,7 +198,7 @@
                 <div class="profile-card group order-1 md:order-2 relative md:-top-6 z-10">
                     <div class="relative mx-auto mb-6">
                         <img src="foto_iago.png" onerror="this.src='https://via.placeholder.com/300x300?text=Iago'" alt="Iago Manguary" class="profile-img profile-img-center shadow-2xl">
-                        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-5 py-1.5 rounded-full shadow-lg text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">Sócio Proprietário</div>
+                        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-5 py-1.5 rounded-full shadow-lg text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">Sócio Fundador</div>
                     </div>
                     <h4 class="text-2xl font-bold text-slate-900">Iago Manguary</h4>
                     <p class="text-base text-green-600 font-bold">Estratégia & Gestão</p>
@@ -178,7 +207,7 @@
                 <div class="profile-card group order-3 md:order-3 relative md:top-4">
                     <div class="relative mx-auto mb-4">
                         <img src="foto_natalia.png" onerror="this.src='https://via.placeholder.com/260x260?text=Natalia'" alt="Natália Azevedo" class="profile-img">
-                        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white px-4 py-1 rounded-full shadow-md text-xs font-bold text-slate-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Sócia Proprietária</div>
+                        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white px-4 py-1 rounded-full shadow-md text-xs font-bold text-slate-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Sócio Fundador</div>
                     </div>
                     <h4 class="text-xl font-bold text-slate-900">Natália Azevedo</h4>
                     <p class="text-sm text-green-600 font-semibold">Criação & Branding</p>
@@ -251,21 +280,22 @@
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-slate-900 mb-4 font-title">Nosso Portfólio</h2>
                 <div class="w-16 h-1 bg-green-500 mx-auto rounded-full"></div>
-                <p class="text-gray-500 mt-4">Criatividade que converte.</p>
+                <p class="text-gray-500 mt-4">Clique nas imagens para ampliar.</p>
             </div>
 
             <div class="mb-12">
                 <h3 class="text-center text-gray-500 text-sm uppercase tracking-widest font-bold mb-6">Social Media & Design</h3>
                 <div class="marquee-container w-full py-4">
                     <div class="marquee-content">
-                        <div class="marquee-item"><img src="arte1.png" alt="Arte 1"></div>
-                        <div class="marquee-item"><img src="arte2.png" alt="Arte 2"></div>
-                        <div class="marquee-item"><img src="arte3.png" alt="Arte 3"></div>
-                        <div class="marquee-item"><img src="arte1.png" alt="Arte 4"></div>
-                        <div class="marquee-item"><img src="arte1.png" alt="Arte 1"></div>
-                        <div class="marquee-item"><img src="arte2.png" alt="Arte 2"></div>
-                        <div class="marquee-item"><img src="arte3.png" alt="Arte 3"></div>
-                        <div class="marquee-item"><img src="arte1.png" alt="Arte 4"></div>
+                        <div class="marquee-item item-design"><img src="arte1.png" alt="Design 1" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-design"><img src="arte2.png" alt="Design 2" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-design"><img src="arte3.png" alt="Design 3" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-design"><img src="arte1.png" alt="Design 4" onclick="openLightbox(this.src)"></div>
+                        
+                        <div class="marquee-item item-design"><img src="arte1.png" alt="Design 1" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-design"><img src="arte2.png" alt="Design 2" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-design"><img src="arte3.png" alt="Design 3" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-design"><img src="arte1.png" alt="Design 4" onclick="openLightbox(this.src)"></div>
                     </div>
                 </div>
             </div>
@@ -274,58 +304,15 @@
                 <h3 class="text-center text-gray-500 text-sm uppercase tracking-widest font-bold mb-6">Produção Audiovisual</h3>
                 
                 <div class="marquee-container w-full py-4">
-                    <div class="marquee-content-reverse"> <div class="marquee-item-vertical">
-                            <div class="photo-frame">
-                                <div class="photo-bg bg-custom-green"></div>
-                                <img src="foto1.png" alt="Foto 1">
-                            </div>
-                        </div>
-                        
-                        <div class="marquee-item-vertical">
-                            <div class="photo-frame">
-                                <div class="photo-bg bg-custom-blue"></div>
-                                <img src="foto2.png" alt="Foto 2">
-                            </div>
-                        </div>
-                        
-                        <div class="marquee-item-vertical">
-                            <div class="photo-frame">
-                                <div class="photo-bg bg-custom-green"></div>
-                                <img src="foto3.png" alt="Foto 3">
-                            </div>
-                        </div>
+                    <div class="marquee-content"> <div class="marquee-item item-audiovisual"><img src="foto1.png" alt="Audiovisual 1" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-audiovisual"><img src="foto2.png" alt="Audiovisual 2" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-audiovisual"><img src="foto3.png" alt="Audiovisual 3" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-audiovisual"><img src="foto1.png" alt="Audiovisual 4" onclick="openLightbox(this.src)"></div>
 
-                         <div class="marquee-item-vertical">
-                            <div class="photo-frame">
-                                <div class="photo-bg bg-custom-blue"></div>
-                                <img src="foto1.png" alt="Foto 1">
-                            </div>
-                        </div>
-
-                        <div class="marquee-item-vertical">
-                            <div class="photo-frame">
-                                <div class="photo-bg bg-custom-green"></div>
-                                <img src="foto1.png" alt="Foto 1">
-                            </div>
-                        </div>
-                        <div class="marquee-item-vertical">
-                            <div class="photo-frame">
-                                <div class="photo-bg bg-custom-blue"></div>
-                                <img src="foto2.png" alt="Foto 2">
-                            </div>
-                        </div>
-                        <div class="marquee-item-vertical">
-                            <div class="photo-frame">
-                                <div class="photo-bg bg-custom-green"></div>
-                                <img src="foto3.png" alt="Foto 3">
-                            </div>
-                        </div>
-                        <div class="marquee-item-vertical">
-                            <div class="photo-frame">
-                                <div class="photo-bg bg-custom-blue"></div>
-                                <img src="foto1.png" alt="Foto 1">
-                            </div>
-                        </div>
+                        <div class="marquee-item item-audiovisual"><img src="foto1.png" alt="Audiovisual 1" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-audiovisual"><img src="foto2.png" alt="Audiovisual 2" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-audiovisual"><img src="foto3.png" alt="Audiovisual 3" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-audiovisual"><img src="foto1.png" alt="Audiovisual 4" onclick="openLightbox(this.src)"></div>
 
                     </div>
                 </div>
@@ -435,6 +422,22 @@
     </footer>
 
     <script>
+        // --- FUNÇÕES LIGHTBOX (ZOOM) ---
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox(e) {
+            // Fecha se clicar no X ou no fundo preto (não na imagem)
+            if (e.target.id === 'lightbox' || e.target.id === 'lightbox-close') {
+                document.getElementById('lightbox').classList.remove('active');
+            }
+        }
+
+        // --- FUNÇÕES CALCULADORA ---
         function calcularTotal() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             const listaContainer = document.getElementById('lista-selecionados');
@@ -487,4 +490,3 @@
 
 </body>
 </html>
-
