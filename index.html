@@ -39,18 +39,18 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         
-        /* --- ESTILO DAS FOTOS DA EQUIPE (AJUSTADO) --- */
+        /* --- ESTILO DAS FOTOS DA EQUIPE (REVERTIDO PARA O ORIGINAL) --- */
         .profile-img {
             width: 260px;
             height: 260px;
-            /* MUDANÇA AQUI: 'contain' garante que a imagem NUNCA seja cortada */
-            object-fit: contain; 
-            object-position: center;
+            /* REVERTIDO: 'cover' preenche todo o espaço (pode cortar bordas, mas fica cheio) */
+            object-fit: cover; 
+            object-position: top center; /* Foca no rosto */
             border-radius: 20px;
             border: 4px solid white;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             transition: transform 0.3s;
-            background-color: #ffffff; /* Fundo branco para preencher espaços vazios */
+            background-color: #e2e8f0; 
         }
         
         /* Destaque para o Sócio do Centro */
@@ -69,7 +69,7 @@
         /* Animação para a esquerda */
         .marquee-content { display: inline-flex; animation: marquee 30s linear infinite; }
         
-        /* Animação para a direita (opcional, para variar) */
+        /* Animação para a direita (Reversa) */
         .marquee-content-reverse { display: inline-flex; animation: marquee-rev 35s linear infinite; }
 
         /* Item Quadrado (Artes) */
@@ -80,12 +80,11 @@
             background: white;
         }
         
-        /* Item Vertical (Audiovisual/Stories) - NOVO */
+        /* Item Vertical (Audiovisual/Stories) - ROLANDO */
         .marquee-item-vertical {
             width: 280px; height: 370px; /* Mais alto para formato retrato */
             margin-right: 20px;
-            border-radius: 16px; overflow: visible; flex-shrink: 0; /* Visible para mostrar a sombra/efeito */
-            /* box-shadow removido aqui pois o photo-frame já tem */
+            border-radius: 16px; overflow: visible; flex-shrink: 0;
         }
 
         .marquee-item img, .marquee-item-vertical img { width: 100%; height: 100%; object-fit: cover; }
