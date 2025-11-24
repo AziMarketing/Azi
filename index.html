@@ -81,11 +81,15 @@
             <div class="flex items-center gap-3">
                 <img src="logo_azi.png" onerror="this.src='logo_azi.jpg'; this.onerror=null;" alt="Azi" class="h-10 w-auto object-contain hover:opacity-80 transition">
             </div>
-            <div class="hidden md:flex gap-8 text-sm font-semibold text-slate-600">
+            <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
                 <a href="#quem-somos" class="hover:text-emerald-600 transition">Quem Somos</a>
-                <a href="#diferenciais" class="hover:text-emerald-600 transition">Diferenciais</a>
                 <a href="#servicos" class="hover:text-emerald-600 transition">Serviços</a>
                 <a href="#portfolio" class="hover:text-emerald-600 transition">Portfólio</a>
+                
+                <div class="h-4 w-px bg-slate-300 mx-2"></div>
+                <a href="https://www.instagram.com/azicomunicacao/" target="_blank" class="text-slate-400 hover:text-[#E1306C] transition text-xl" title="Siga nosso Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
             </div>
             <a href="#orcamento" class="bg-azi-dark hover:bg-emerald-600 text-white font-bold py-2.5 px-6 rounded-full transition shadow-lg text-sm flex items-center gap-2"><span>Orçamento</span></a>
         </div>
@@ -134,7 +138,7 @@
             </div>
         </section>
 
-        <section id="diferenciais" class="mb-32 scroll-mt-32">
+        <section class="mb-32 scroll-mt-32">
             <div class="bg-white rounded-3xl p-10 shadow-xl border border-slate-100">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                     <div class="text-center">
@@ -160,7 +164,6 @@
             <h2 class="text-3xl font-bold text-slate-900 mb-12">Como Funciona?</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto relative">
                 <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-slate-100 -z-10 -translate-y-1/2"></div>
-                
                 <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
                     <div class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">1</div>
                     <h4 class="font-bold text-lg mb-2">Escolha o Pacote</h4>
@@ -205,8 +208,7 @@
                 <div class="relative max-w-7xl mx-auto group">
                     <button class="nav-btn nav-prev opacity-0 group-hover:opacity-100 transition" onclick="scrollSlider('design', -320)"><i class="fa-solid fa-chevron-left"></i></button>
                     <div id="slider-design" class="slider-wrapper" onmouseenter="pauseScroll('design')" onmouseleave="resumeScroll('design')">
-                        <div class="slider-track" id="track-design">
-                            </div>
+                        <div class="slider-track" id="track-design"></div>
                     </div>
                     <button class="nav-btn nav-next opacity-0 group-hover:opacity-100 transition" onclick="scrollSlider('design', 320)"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
@@ -217,8 +219,7 @@
                 <div class="relative max-w-7xl mx-auto group">
                     <button class="nav-btn nav-prev opacity-0 group-hover:opacity-100 transition" onclick="scrollSlider('audio', -420)"><i class="fa-solid fa-chevron-left"></i></button>
                     <div id="slider-audio" class="slider-wrapper" onmouseenter="pauseScroll('audio')" onmouseleave="resumeScroll('audio')">
-                        <div class="slider-track" id="track-audio">
-                            </div>
+                        <div class="slider-track" id="track-audio"></div>
                     </div>
                     <button class="nav-btn nav-next opacity-0 group-hover:opacity-100 transition" onclick="scrollSlider('audio', 420)"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
@@ -260,91 +261,64 @@
     <footer class="bg-white border-t border-slate-200 py-12 text-center">
         <div class="container mx-auto px-6">
             <img src="logo_azi.png" alt="Logo" class="h-8 mx-auto mb-6 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300">
+            <div class="flex justify-center gap-8 text-2xl text-slate-400 mb-6">
+                <a href="https://www.instagram.com/azicomunicacao/" target="_blank" class="hover:text-[#E1306C] transition transform hover:-translate-y-1"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://wa.me/5563993013005" target="_blank" class="hover:text-[#25D366] transition transform hover:-translate-y-1"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
             <p class="text-slate-400 text-xs font-medium">&copy; 2025 Azi Comunicação.</p>
         </div>
     </footer>
 
     <script>
-        // --- DADOS DOS CARROSSÉIS ---
+        // --- DADOS E RENDERIZAÇÃO ---
         const designImages = ['arte1.png', 'arte2.png', 'arte3.png', 'arte4.png', 'arte5.png', 'arte6.png'];
-        const audioImages = [
-            { type: 'video', src: 'video1.mp4' },
-            { type: 'img', src: 'foto1.png' },
-            { type: 'img', src: 'foto2.png' },
-            { type: 'img', src: 'foto3.png' },
-            { type: 'img', src: 'foto4.png' },
-            { type: 'img', src: 'foto5.png' }
-        ];
+        const audioImages = [{type:'video',src:'video1.mp4'}, {type:'img',src:'foto1.png'}, {type:'img',src:'foto2.png'}, {type:'img',src:'foto3.png'}, {type:'img',src:'foto4.png'}, {type:'img',src:'foto5.png'}];
 
-        // --- INICIALIZAÇÃO DOS SLIDERS ---
         function initSlider(trackId, items, typeClass) {
             const track = document.getElementById(trackId);
-            let contentHTML = '';
-            
-            // Cria os itens (duplicando para dar sensação de infinito se precisar, mas aqui vamos usar scroll)
-            // Para scroll infinito real com JS, duplicamos a lista 3 vezes
-            const renderList = [...items, ...items, ...items]; 
-
-            renderList.forEach(item => {
-                if (typeof item === 'string') {
-                    contentHTML += `<div class="slider-item ${typeClass}" onclick="openLightbox('img', '${item}')"><img src="${item}" onerror="this.src='https://placehold.co/300x300?text=Imagem'" alt="Job"></div>`;
-                } else if (item.type === 'video') {
-                    contentHTML += `<div class="slider-item ${typeClass} relative group" onclick="openLightbox('video', '${item.src}')">
-                        <video autoplay muted loop playsinline class="pointer-events-none w-full h-full object-cover"><source src="${item.src}" type="video/mp4"></video>
-                        <div class="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/30 transition"><div class="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg"><i class="fa-solid fa-play text-emerald-600 ml-1"></i></div></div>
-                    </div>`;
+            let content = '';
+            [...items, ...items, ...items].forEach(item => {
+                if(item.type === 'video') {
+                    content += `<div class="slider-item ${typeClass} relative group" onclick="openLightbox('video', '${item.src}')"><video autoplay muted loop playsinline class="pointer-events-none w-full h-full object-cover"><source src="${item.src}" type="video/mp4"></video><div class="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/30 transition"><div class="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg"><i class="fa-solid fa-play text-emerald-600 ml-1"></i></div></div></div>`;
                 } else {
-                    contentHTML += `<div class="slider-item ${typeClass}" onclick="openLightbox('img', '${item.src}')"><img src="${item.src}" onerror="this.src='https://placehold.co/400x225?text=Imagem'" alt="Job"></div>`;
+                    const src = item.src || item;
+                    content += `<div class="slider-item ${typeClass}" onclick="openLightbox('img', '${src}')"><img src="${src}" onerror="this.src='https://placehold.co/300x300?text=Imagem'" alt="Job"></div>`;
                 }
             });
-            track.innerHTML = contentHTML;
+            track.innerHTML = content;
         }
-
         initSlider('track-design', designImages, 'item-design');
         initSlider('track-audio', audioImages, 'item-audiovisual');
 
-        // --- LÓGICA DE AUTO-SCROLL + MANUAL ---
-        const sliders = {
-            design: { id: 'slider-design', speed: 1, scrolling: true, pos: 0 },
-            audio: { id: 'slider-audio', speed: 1, scrolling: true, pos: 0 }
-        };
-
-        function animateSliders() {
-            for (let key in sliders) {
+        // --- SCROLL AUTO + MANUAL ---
+        const sliders = { design: { id: 'slider-design', speed: 0.5, active: true }, audio: { id: 'slider-audio', speed: 0.5, active: true } };
+        
+        function autoScroll() {
+            for(let key in sliders) {
                 const s = sliders[key];
                 const el = document.getElementById(s.id);
-                if (s.scrolling && el) {
+                if(s.active && el) {
                     el.scrollLeft += s.speed;
-                    // Loop Infinito simples (se chegar no fim, volta pro meio para não dar salto)
-                    // Nota: Para loop perfeito em vanilla JS sem glitch é complexo, aqui faremos o reset simples
-                    if (el.scrollLeft >= (el.scrollWidth - el.clientWidth)) {
-                       el.scrollLeft = 0; 
-                    }
+                    if(el.scrollLeft >= (el.scrollWidth - el.clientWidth) / 2) el.scrollLeft = 0; // Reset suave
                 }
             }
-            requestAnimationFrame(animateSliders);
+            requestAnimationFrame(autoScroll);
         }
-        animateSliders(); // Inicia animação
+        autoScroll();
 
-        function pauseScroll(key) { sliders[key].scrolling = false; }
-        function resumeScroll(key) { sliders[key].scrolling = true; }
-        
-        function scrollSlider(key, amount) {
-            const el = document.getElementById(sliders[key].id);
-            el.scrollBy({ left: amount, behavior: 'smooth' });
-        }
+        function pauseScroll(key) { sliders[key].active = false; }
+        function resumeScroll(key) { sliders[key].active = true; }
+        function scrollSlider(key, amount) { document.getElementById(sliders[key].id).scrollBy({ left: amount, behavior: 'smooth' }); }
 
         // --- LIGHTBOX ---
         function openLightbox(type, src) {
-            const lightbox = document.getElementById('lightbox');
+            const box = document.getElementById('lightbox');
             const content = document.getElementById('lightbox-content');
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            if (type === 'video') content.innerHTML = `<video controls autoplay class="max-w-full max-h-[90vh] rounded-lg shadow-2xl"><source src="${src}" type="video/mp4"></video>`;
-            else content.innerHTML = `<img src="${src}" alt="Zoom">`;
+            box.classList.add('active'); document.body.style.overflow = 'hidden';
+            content.innerHTML = type === 'video' ? `<video controls autoplay class="max-w-full max-h-[90vh] rounded-lg shadow-2xl"><source src="${src}" type="video/mp4"></video>` : `<img src="${src}" alt="Zoom">`;
         }
         function closeLightbox(e) {
-            if (e.target.id === 'lightbox' || e.target.parentElement.id === 'lightbox-close' || e.target.id === 'lightbox-close') {
+            if(e.target.id === 'lightbox' || e.target.parentElement.id === 'lightbox-close' || e.target.id === 'lightbox-close') {
                 document.getElementById('lightbox').classList.remove('active');
                 document.getElementById('lightbox-content').innerHTML = '';
                 document.body.style.overflow = 'auto';
@@ -355,9 +329,8 @@
         function calcularTotal() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             const list = document.getElementById('lista-selecionados');
-            let total = 0;
-            let html = '';
-            if (checkboxes.length === 0) list.innerHTML = '<p class="italic opacity-50 text-xs">Nenhum serviço selecionado.</p>';
+            let total = 0, html = '';
+            if(checkboxes.length === 0) list.innerHTML = '<p class="italic opacity-50 text-xs">Nenhum serviço selecionado.</p>';
             else {
                 checkboxes.forEach(cb => {
                     total += parseFloat(cb.value);
@@ -370,13 +343,10 @@
 
         function enviarWhatsApp() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            if (checkboxes.length === 0) return alert("Selecione pelo menos um serviço.");
+            if(checkboxes.length === 0) return alert("Selecione pelo menos um serviço.");
             let msg = "Olá Azi! Gostaria de contratar:%0A%0A";
             let total = 0;
-            checkboxes.forEach(cb => {
-                total += parseFloat(cb.value);
-                msg += `✅ ${cb.getAttribute('data-name')} (R$ ${cb.value})%0A`;
-            });
+            checkboxes.forEach(cb => { total += parseFloat(cb.value); msg += `✅ ${cb.getAttribute('data-name')} (R$ ${cb.value})%0A`; });
             msg += `%0A💰 *Total: R$ ${total}*%0A%0APodemos fechar?`;
             window.open(`https://wa.me/5563993013005?text=${msg}`, '_blank');
         }
