@@ -42,21 +42,21 @@
     <style>
         body { background-color: #F8FAFC; overflow-x: hidden; }
         
-        /* --- SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        /* --- UTILS --- */
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
         /* --- LIGHTBOX --- */
         #lightbox {
             display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px);
+            background-color: rgba(11, 17, 32, 0.95); backdrop-filter: blur(10px);
             justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;
         }
         #lightbox.active { display: flex; opacity: 1; }
-        #lightbox img {
-            max-width: 90%; max-height: 90%; border-radius: 12px;
+        
+        /* Conteúdo do Lightbox */
+        #lightbox-content img, #lightbox-content video {
+            max-width: 90vw; max-height: 85vh; border-radius: 8px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); object-fit: contain;
         }
         
@@ -66,9 +66,11 @@
             box-shadow: 0 0 0 1px #10b981;
         }
 
-        /* --- FOTOS EQUIPE (COVER - Cheio) --- */
+        /* --- FOTOS EQUIPE (COVER - Preenche tudo) --- */
         .profile-img {
-            width: 260px; height: 260px; object-fit: cover; object-position: top center;
+            width: 260px; height: 260px; 
+            object-fit: cover; /* Importante: Corta bordas para focar no rosto */
+            object-position: top center;
             border-radius: 24px; border: 1px solid rgba(255,255,255,0.5);
             box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15);
             transition: all 0.4s ease; background-color: #e2e8f0;
@@ -79,65 +81,74 @@
         }
         .profile-card:hover .profile-img { transform: translateY(-10px) scale(1.02); }
 
-        /* --- CARROSSEL --- */
-        .marquee-container { overflow: hidden; white-space: nowrap; position: relative; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
-        .marquee-content { display: inline-flex; animation: marquee 60s linear infinite; }
-        .marquee-container:hover .marquee-content { animation-play-state: paused; }
-        
-        .marquee-item {
-            margin-right: 24px; border-radius: 16px; overflow: hidden; flex-shrink: 0;
-            background: #f8fafc; border: 1px solid #e2e8f0; cursor: zoom-in;
-            transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;
+        /* --- CARROSSEL MANUAL (SLIDER) --- */
+        .slider-container {
+            display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+            gap: 24px; padding: 20px 5px; scroll-behavior: smooth;
         }
-        .marquee-item:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -5px rgba(0,0,0,0.1); border-color: #10b981; }
         
-        /* IMAGENS DO PORTFÓLIO (CONTAIN - Sem cortes) */
-        .marquee-item img, .marquee-item video { width: 100%; height: 100%; object-fit: contain; padding: 0; }
+        .slider-item {
+            scroll-snap-align: center; flex-shrink: 0;
+            border-radius: 16px; overflow: hidden;
+            background: #f1f5f9; border: 1px solid #e2e8f0; 
+            cursor: zoom-in; transition: all 0.3s ease; 
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        .slider-item:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -5px rgba(0,0,0,0.1); border-color: #10b981; }
+        
+        /* IMAGENS PORTFÓLIO (CONTAIN - Sem cortes) */
+        .slider-item img, .slider-item video { width: 100%; height: 100%; object-fit: contain; padding: 0; }
 
-        /* TAMANHOS DOS CARDS */
-        .item-design { width: 300px; height: 300px; }
-        .item-audiovisual { width: 400px; height: 225px; } /* 16:9 Horizontal */
+        /* TAMANHOS */
+        .item-design { width: 300px; height: 300px; } /* Quadrado */
+        .item-audiovisual { width: 400px; height: 225px; } /* Horizontal 16:9 */
 
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        /* SETAS DE NAVEGAÇÃO */
+        .nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 48px; height: 48px; border-radius: 50%;
+            background: white; color: #0f172a; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 20; transition: all 0.2s; border: 1px solid #f1f5f9;
+        }
+        .nav-btn:hover { background: #10b981; color: white; scale: 1.1; }
+        .nav-prev { left: -20px; }
+        .nav-next { right: -20px; }
 
+        @media (max-width: 768px) {
+            .nav-btn { display: none; } /* Celular usa touch */
+            .slider-container { padding-left: 20px; padding-right: 20px; }
+        }
     </style>
 </head>
 <body class="text-slate-600 antialiased selection:bg-emerald-100 selection:text-emerald-900">
 
     <div id="lightbox" onclick="closeLightbox(event)">
-        <button id="lightbox-close" class="absolute top-6 right-8 text-white/70 hover:text-white transition transform hover:scale-110">
+        <button id="lightbox-close" class="absolute top-6 right-8 text-white/70 hover:text-white transition transform hover:scale-110 z-50">
             <i class="fa-solid fa-xmark text-4xl"></i>
         </button>
-        <img id="lightbox-img" src="" alt="Zoom">
+        <div id="lightbox-content" onclick="event.stopPropagation()">
+            </div>
     </div>
 
     <a href="https://wa.me/5563993013005" target="_blank" class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20bd5a] text-white p-4 rounded-full shadow-2xl shadow-green-500/40 transition transform hover:scale-110 hover:-translate-y-1 flex items-center justify-center group">
         <i class="fa-brands fa-whatsapp text-3xl"></i>
-        <span class="absolute right-full mr-4 bg-white text-slate-800 px-3 py-1 rounded-lg text-xs font-bold shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Falar agora</span>
     </a>
 
     <nav class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-40 border-b border-slate-100">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <img src="logo_azi.png" alt="Azi Comunicação" class="h-10 w-auto object-contain hover:opacity-80 transition">
+                <img src="logo_azi.png" onerror="this.style.display='none'" alt="Azi Comunicação" class="h-10 w-auto object-contain hover:opacity-80 transition">
+                <span class="font-bold text-xl text-slate-800" style="display: none;" id="logo-text">AZI</span>
             </div>
             <div class="hidden md:flex gap-8 text-sm font-semibold text-slate-600">
-                <a href="#quem-somos" class="hover:text-emerald-600 transition relative group">
-                    Liderança
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-500 transition-all group-hover:w-full"></span>
-                </a>
-                <a href="#servicos" class="hover:text-emerald-600 transition relative group">
-                    Serviços
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-500 transition-all group-hover:w-full"></span>
-                </a>
-                <a href="#portfolio" class="hover:text-emerald-600 transition relative group">
-                    Portfólio
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-500 transition-all group-hover:w-full"></span>
-                </a>
+                <a href="#quem-somos" class="hover:text-emerald-600 transition">Liderança</a>
+                <a href="#servicos" class="hover:text-emerald-600 transition">Serviços</a>
+                <a href="#portfolio" class="hover:text-emerald-600 transition">Portfólio</a>
             </div>
-            <a href="#orcamento" class="bg-azi-dark hover:bg-emerald-600 text-white font-bold py-2.5 px-6 rounded-full transition shadow-lg shadow-slate-900/20 hover:shadow-emerald-500/30 transform hover:-translate-y-0.5 text-sm flex items-center gap-2">
+            <a href="#orcamento" class="bg-azi-dark hover:bg-emerald-600 text-white font-bold py-2.5 px-6 rounded-full transition shadow-lg text-sm flex items-center gap-2">
                 <span>Orçamento</span>
-                <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>
     </nav>
@@ -148,25 +159,18 @@
         <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600/20 rounded-full filter blur-[100px] -ml-20 -mb-20 animate-pulse-slow" style="animation-delay: 2s;"></div>
 
         <div class="container mx-auto px-6 relative z-10 text-center max-w-4xl">
-            <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/10 text-emerald-300 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-8 hover:bg-white/10 transition cursor-default">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                Agência de Performance
+            <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/10 text-emerald-300 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-8">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Agência de Performance
             </div>
             <h1 class="text-5xl md:text-7xl font-extrabold mb-8 leading-tight tracking-tight">
-                Transforme cliques em<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">faturamento real.</span>
+                Transforme cliques em <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">faturamento real.</span>
             </h1>
-            <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
-                Estratégias validadas de Tráfego Pago, Branding e Social Media. O marketing que sua empresa precisa, com o investimento que cabe no bolso.
+            <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-12 font-light">
+                Estratégias validadas de Tráfego Pago, Branding e Social Media.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#orcamento" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-4 px-10 rounded-xl transition shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2 transform hover:-translate-y-1">
-                    Ver Pacotes
-                </a>
-                <a href="https://wa.me/5563993013005" target="_blank" class="border border-slate-600 hover:bg-white hover:text-slate-900 hover:border-white text-slate-300 font-semibold py-4 px-8 rounded-xl transition flex items-center justify-center gap-2">
-                    <i class="fa-brands fa-whatsapp"></i>
-                    Falar com Especialista
-                </a>
+                <a href="#orcamento" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-4 px-10 rounded-xl transition shadow-xl">Ver Pacotes</a>
+                <a href="https://wa.me/5563993013005" target="_blank" class="border border-slate-600 hover:bg-white hover:text-slate-900 text-slate-300 font-semibold py-4 px-8 rounded-xl transition">Falar no WhatsApp</a>
             </div>
         </div>
     </header>
@@ -178,12 +182,11 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">Quem faz acontecer</h2>
                 <div class="w-20 h-1.5 bg-emerald-500 mx-auto rounded-full"></div>
             </div>
-            
             <div class="flex flex-col md:flex-row justify-center items-center md:items-end gap-12 md:gap-8 lg:gap-16 relative pt-10">
                 
                 <div class="profile-card group order-2 md:order-1 relative md:top-8 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s;">
                     <div class="relative mx-auto mb-5">
-                        <img src="foto_kaio.png" onerror="this.src='https://via.placeholder.com/260x260/cbd5e1/64748b?text=Kaio'" alt="Kaio Azevedo" class="profile-img">
+                        <img src="foto_kaio.png" onerror="this.src='https://via.placeholder.com/260x260?text=Kaio'" alt="Kaio Azevedo" class="profile-img">
                         <div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white border border-slate-100 px-4 py-1.5 rounded-full shadow-lg text-xs font-bold text-slate-800 uppercase tracking-wide whitespace-nowrap">Sócio Fundador</div>
                     </div>
                     <h4 class="text-xl font-bold text-slate-900">Kaio Azevedo</h4>
@@ -192,8 +195,8 @@
 
                 <div class="profile-card group order-1 md:order-2 relative md:-top-4 z-10 opacity-0 animate-fade-in-up">
                     <div class="relative mx-auto mb-6">
-                        <img src="foto_iago.png" onerror="this.src='https://via.placeholder.com/300x300/cbd5e1/64748b?text=Iago'" alt="Iago Manguary" class="profile-img profile-img-center">
-                        <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-emerald-600 text-white px-6 py-2 rounded-full shadow-xl shadow-emerald-500/30 text-sm font-bold uppercase tracking-wide whitespace-nowrap">Sócio Fundador</div>
+                        <img src="foto_iago.png" onerror="this.src='https://via.placeholder.com/300x300?text=Iago'" alt="Iago Manguary" class="profile-img profile-img-center">
+                        <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-emerald-600 text-white px-6 py-2 rounded-full shadow-xl text-sm font-bold uppercase tracking-wide whitespace-nowrap">Sócio Fundador</div>
                     </div>
                     <h4 class="text-3xl font-bold text-slate-900">Iago Manguary</h4>
                     <p class="text-base text-emerald-600 font-bold mt-1">Estratégia & Gestão</p>
@@ -201,7 +204,7 @@
 
                 <div class="profile-card group order-3 md:order-3 relative md:top-8 opacity-0 animate-fade-in-up" style="animation-delay: 0.4s;">
                     <div class="relative mx-auto mb-5">
-                        <img src="foto_natalia.png" onerror="this.src='https://via.placeholder.com/260x260/cbd5e1/64748b?text=Natália'" alt="Natália Azevedo" class="profile-img">
+                        <img src="foto_natalia.png" onerror="this.src='https://via.placeholder.com/260x260?text=Natalia'" alt="Natália Azevedo" class="profile-img">
                         <div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white border border-slate-100 px-4 py-1.5 rounded-full shadow-lg text-xs font-bold text-slate-800 uppercase tracking-wide whitespace-nowrap">Sócio Fundador</div>
                     </div>
                     <h4 class="text-xl font-bold text-slate-900">Natália Azevedo</h4>
@@ -214,9 +217,8 @@
         <section id="servicos" class="mb-32 scroll-mt-32">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Soluções Estratégicas</h2>
-                <p class="text-slate-500 max-w-2xl mx-auto">Pacotes desenhados para gerar tração e crescimento, independente do tamanho do seu negócio.</p>
+                <p class="text-slate-500 max-w-2xl mx-auto">Pacotes desenhados para gerar tração e crescimento.</p>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="service-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl relative group">
                     <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform"><i class="fa-brands fa-instagram"></i></div>
@@ -270,160 +272,87 @@
             </div>
         </section>
 
-        <section id="portfolio" class="mb-32 scroll-mt-32 overflow-hidden">
+        <section id="portfolio" class="mb-32 scroll-mt-32">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Nosso Portfólio</h2>
-                <p class="text-slate-500">Criatividade visual que desperta desejo e converte.</p>
+                <p class="text-slate-500">Use as setas ou arraste para navegar. Clique para ampliar.</p>
             </div>
 
-            <div class="mb-16">
-                <div class="flex items-center justify-center gap-2 mb-6 text-slate-400 text-sm font-bold uppercase tracking-wider">
-                    <i class="fa-solid fa-layer-group"></i> Social Media & Design
+            <div class="mb-16 relative group">
+                <div class="flex items-center justify-between px-6 mb-4 max-w-7xl mx-auto">
+                    <span class="text-slate-400 text-sm font-bold uppercase tracking-wider"><i class="fa-solid fa-layer-group mr-2"></i> Social Media & Design</span>
                 </div>
-                <div class="marquee-container w-full py-4 relative">
-                    <div class="marquee-content">
-                        <div class="marquee-item item-design"><img src="arte1.png" alt="Design 1" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-design"><img src="arte2.png" alt="Design 2" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-design"><img src="arte3.png" alt="Design 3" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-design"><img src="arte4.png" alt="Design 4" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-design"><img src="arte5.png" onerror="this.src='arte1.png'" alt="Design 5" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-design"><img src="arte6.png" onerror="this.src='arte2.png'" alt="Design 6" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-design"><img src="arte1.png" alt="Design 1" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-design"><img src="arte2.png" alt="Design 2" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-design"><img src="arte3.png" alt="Design 3" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-design"><img src="arte4.png" alt="Design 4" onclick="openLightbox(this.src)"></div>
+                <div class="relative max-w-7xl mx-auto">
+                    <button class="nav-btn nav-prev" onclick="slide('design', 'left')"><i class="fa-solid fa-chevron-left"></i></button>
+                    
+                    <div id="slider-design" class="slider-container hide-scroll">
+                        <div class="slider-item item-design" onclick="openLightbox('img', 'arte1.png')"><img src="arte1.png" onerror="this.src='https://placehold.co/300x300?text=Erro+Arte1'" alt="Design"></div>
+                        <div class="slider-item item-design" onclick="openLightbox('img', 'arte2.png')"><img src="arte2.png" onerror="this.src='https://placehold.co/300x300?text=Erro+Arte2'" alt="Design"></div>
+                        <div class="slider-item item-design" onclick="openLightbox('img', 'arte3.png')"><img src="arte3.png" onerror="this.src='https://placehold.co/300x300?text=Erro+Arte3'" alt="Design"></div>
+                        <div class="slider-item item-design" onclick="openLightbox('img', 'arte4.png')"><img src="arte4.png" onerror="this.src='https://placehold.co/300x300?text=Erro+Arte4'" alt="Design"></div>
+                        <div class="slider-item item-design" onclick="openLightbox('img', 'arte5.png')"><img src="arte5.png" onerror="this.src='https://placehold.co/300x300?text=Erro+Arte5'" alt="Design"></div>
+                        <div class="slider-item item-design" onclick="openLightbox('img', 'arte6.png')"><img src="arte6.png" onerror="this.src='https://placehold.co/300x300?text=Erro+Arte6'" alt="Design"></div>
                     </div>
+
+                    <button class="nav-btn nav-next" onclick="slide('design', 'right')"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
 
-            <div class="mb-8">
-                <div class="flex items-center justify-center gap-2 mb-6 text-slate-400 text-sm font-bold uppercase tracking-wider">
-                    <i class="fa-solid fa-video"></i> Produção Audiovisual
+            <div class="mb-8 relative group">
+                <div class="flex items-center justify-between px-6 mb-4 max-w-7xl mx-auto">
+                    <span class="text-slate-400 text-sm font-bold uppercase tracking-wider"><i class="fa-solid fa-video mr-2"></i> Produção Audiovisual</span>
                 </div>
-                
-                <div class="marquee-container w-full py-4 relative">
-                    <div class="marquee-content"> 
-                        <div class="marquee-item item-audiovisual"><img src="foto1.png" alt="Audiovisual 1" onclick="openLightbox(this.src)"></div>
+                <div class="relative max-w-7xl mx-auto">
+                    <button class="nav-btn nav-prev" onclick="slide('audiovisual', 'left')"><i class="fa-solid fa-chevron-left"></i></button>
+                    
+                    <div id="slider-audiovisual" class="slider-container hide-scroll">
                         
-                        <div class="marquee-item item-audiovisual relative group">
-                            <video autoplay muted loop playsinline class="w-full h-full object-cover">
+                        <div class="slider-item item-audiovisual relative group" onclick="openLightbox('video', 'video1.mp4')">
+                            <video autoplay muted loop playsinline class="w-full h-full object-cover pointer-events-none">
                                 <source src="video1.mp4" type="video/mp4">
                             </video>
-                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                <div class="w-12 h-12 bg-white/80 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm">
-                                    <i class="fa-solid fa-play text-emerald-600 ml-1"></i>
-                                </div>
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/30 transition">
+                                <div class="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm transform group-hover:scale-110 transition"><i class="fa-solid fa-play text-emerald-600 ml-1"></i></div>
                             </div>
                         </div>
 
-                        <div class="marquee-item item-audiovisual"><img src="foto2.png" alt="Audiovisual 2" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-audiovisual"><img src="foto3.png" alt="Audiovisual 3" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-audiovisual"><img src="foto4.png" alt="Audiovisual 4" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-audiovisual"><img src="foto5.png" onerror="this.src='foto1.png'" alt="Audiovisual 5" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-audiovisual"><img src="foto6.png" onerror="this.src='foto2.png'" alt="Audiovisual 6" onclick="openLightbox(this.src)"></div>
-                        
-                        <div class="marquee-item item-audiovisual"><img src="foto1.png" alt="Audiovisual 1" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-audiovisual relative group">
-                            <video autoplay muted loop playsinline class="w-full h-full object-cover">
-                                <source src="video1.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="marquee-item item-audiovisual"><img src="foto2.png" alt="Audiovisual 2" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-audiovisual"><img src="foto3.png" alt="Audiovisual 3" onclick="openLightbox(this.src)"></div>
+                        <div class="slider-item item-audiovisual" onclick="openLightbox('img', 'foto1.png')"><img src="foto1.png" onerror="this.src='https://placehold.co/400x225?text=Erro+Foto1'" alt="Audio"></div>
+                        <div class="slider-item item-audiovisual" onclick="openLightbox('img', 'foto2.png')"><img src="foto2.png" onerror="this.src='https://placehold.co/400x225?text=Erro+Foto2'" alt="Audio"></div>
+                        <div class="slider-item item-audiovisual" onclick="openLightbox('img', 'foto3.png')"><img src="foto3.png" onerror="this.src='https://placehold.co/400x225?text=Erro+Foto3'" alt="Audio"></div>
+                        <div class="slider-item item-audiovisual" onclick="openLightbox('img', 'foto4.png')"><img src="foto4.png" onerror="this.src='https://placehold.co/400x225?text=Erro+Foto4'" alt="Audio"></div>
+                        <div class="slider-item item-audiovisual" onclick="openLightbox('img', 'foto5.png')"><img src="foto5.png" onerror="this.src='https://placehold.co/400x225?text=Erro+Foto5'" alt="Audio"></div>
                     </div>
+
+                    <button class="nav-btn nav-next" onclick="slide('audiovisual', 'right')"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
         </section>
 
-        <section id="orcamento" class="bg-azi-dark rounded-[2rem] shadow-2xl overflow-hidden scroll-mt-32 mx-auto max-w-6xl">
+        <section id="orcamento" class="bg-azi-dark rounded-[2rem] shadow-2xl overflow-hidden scroll-mt-32 mx-auto max-w-6xl mb-24">
             <div class="grid grid-cols-1 lg:grid-cols-2">
                 <div class="p-8 md:p-12 bg-white">
-                    <h3 class="text-2xl font-bold text-slate-800 mb-2">Simulador de Investimento</h3>
-                    <p class="text-slate-500 mb-8 text-sm">Selecione o que precisa e veja o valor na hora.</p>
-                    <div class="space-y-3 max-h-[450px] overflow-y-auto pr-2">
-                        <label class="checkbox-wrapper cursor-pointer block group">
-                            <input type="checkbox" class="hidden" value="450" data-name="Social Media (Start)" onchange="calcularTotal()">
-                            <div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-brands fa-instagram text-lg text-slate-400 check-icon transition"></i>
-                                    <span class="font-semibold text-sm text-slate-700">Social Media (Start)</span>
-                                </div>
-                                <div class="font-bold text-sm text-slate-600">R$ 450</div>
-                            </div>
-                        </label>
-                        <label class="checkbox-wrapper cursor-pointer block group">
-                            <input type="checkbox" class="hidden" value="850" data-name="Social Media (Growth)" onchange="calcularTotal()">
-                            <div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-solid fa-rocket text-lg text-slate-400 check-icon transition"></i>
-                                    <span class="font-semibold text-sm text-slate-700">Social Media (Growth)</span>
-                                </div>
-                                <div class="font-bold text-sm text-slate-600">R$ 850</div>
-                            </div>
-                        </label>
-                        <label class="checkbox-wrapper cursor-pointer block group">
-                            <input type="checkbox" class="hidden" value="600" data-name="Gestão de Tráfego" onchange="calcularTotal()">
-                            <div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-solid fa-bullhorn text-lg text-slate-400 check-icon transition"></i>
-                                    <span class="font-semibold text-sm text-slate-700">Gestão de Tráfego</span>
-                                </div>
-                                <div class="font-bold text-sm text-slate-600">R$ 600</div>
-                            </div>
-                        </label>
-                        <label class="checkbox-wrapper cursor-pointer block group">
-                            <input type="checkbox" class="hidden" value="250" data-name="Pack 5 Artes" onchange="calcularTotal()">
-                            <div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-solid fa-image text-lg text-slate-400 check-icon transition"></i>
-                                    <span class="font-semibold text-sm text-slate-700">Pack 5 Artes Avulsas</span>
-                                </div>
-                                <div class="font-bold text-sm text-slate-600">R$ 250</div>
-                            </div>
-                        </label>
-                        <label class="checkbox-wrapper cursor-pointer block group">
-                            <input type="checkbox" class="hidden" value="350" data-name="Google Meu Negócio" onchange="calcularTotal()">
-                            <div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-solid fa-map-pin text-lg text-slate-400 check-icon transition"></i>
-                                    <span class="font-semibold text-sm text-slate-700">Google Meu Negócio</span>
-                                </div>
-                                <div class="font-bold text-sm text-slate-600">R$ 350</div>
-                            </div>
-                        </label>
-                        <label class="checkbox-wrapper cursor-pointer block group">
-                            <input type="checkbox" class="hidden" value="500" data-name="Logo Express" onchange="calcularTotal()">
-                            <div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-solid fa-pen-nib text-lg text-slate-400 check-icon transition"></i>
-                                    <span class="font-semibold text-sm text-slate-700">Logo Express</span>
-                                </div>
-                                <div class="font-bold text-sm text-slate-600">R$ 500</div>
-                            </div>
-                        </label>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-2">Simulador</h3>
+                    <p class="text-slate-500 mb-8 text-sm">Selecione o que precisa:</p>
+                    <div class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+                        <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="450" data-name="Social Media (Start)" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Social Media (Start)</span><div class="font-bold text-sm text-slate-600">R$ 450</div></div></label>
+                        <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="850" data-name="Social Media (Growth)" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Social Media (Growth)</span><div class="font-bold text-sm text-slate-600">R$ 850</div></div></label>
+                        <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="600" data-name="Gestão de Tráfego" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Gestão de Tráfego</span><div class="font-bold text-sm text-slate-600">R$ 600</div></div></label>
+                        <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="250" data-name="Pack 5 Artes" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Pack 5 Artes</span><div class="font-bold text-sm text-slate-600">R$ 250</div></div></label>
+                        <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="350" data-name="Google Meu Negócio" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Google Meu Negócio</span><div class="font-bold text-sm text-slate-600">R$ 350</div></div></label>
+                        <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="500" data-name="Logo Express" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Logo Express</span><div class="font-bold text-sm text-slate-600">R$ 500</div></div></label>
                     </div>
                 </div>
-
                 <div class="bg-azi-dark p-8 md:p-12 text-white flex flex-col justify-between relative">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500 rounded-full filter blur-[80px] opacity-20 -mr-10 -mt-10 pointer-events-none"></div>
-                    
                     <div class="relative z-10">
-                        <h3 class="text-lg font-bold mb-6 text-slate-400 uppercase tracking-wider text-xs border-b border-slate-800 pb-2">Resumo do Pedido</h3>
-                        <div id="lista-selecionados" class="space-y-3 text-sm text-slate-300 min-h-[100px]">
-                            <p class="italic opacity-50 text-xs">Nenhum serviço selecionado.</p>
-                        </div>
+                        <h3 class="text-lg font-bold mb-6 text-slate-400 uppercase text-xs border-b border-slate-800 pb-2">Resumo</h3>
+                        <div id="lista-selecionados" class="space-y-3 text-sm text-slate-300 min-h-[50px]"><p class="italic opacity-50 text-xs">Nenhum serviço selecionado.</p></div>
                     </div>
-                    
-                    <div class="mt-8 border-t border-slate-800 pt-8 relative z-10">
+                    <div class="mt-8 pt-8 border-t border-slate-800 relative z-10">
                         <div class="flex justify-between items-end mb-2">
-                            <span class="text-slate-400 text-sm font-medium">Investimento Estimado</span>
+                            <span class="text-slate-400 text-sm font-medium">Total</span>
                             <span class="text-4xl font-extrabold text-emerald-400" id="total-valor">R$ 0,00</span>
                         </div>
-                        <p class="text-[10px] text-slate-500 mb-8 text-right">*Consulte condições de pagamento.</p>
-                        <button onclick="enviarWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-xl transition flex items-center justify-center gap-3 shadow-lg shadow-emerald-900/20 hover:-translate-y-1 group">
-                            <span>Solicitar Contratação</span>
-                            <i class="fa-brands fa-whatsapp text-xl group-hover:scale-110 transition-transform"></i>
-                        </button>
+                        <button onclick="enviarWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-xl transition flex items-center justify-center gap-2 mt-4 shadow-lg shadow-emerald-900/50 hover:-translate-y-1">Solicitar Contratação</button>
                     </div>
                 </div>
             </div>
@@ -434,32 +363,42 @@
     <footer class="bg-white border-t border-slate-200 py-12 text-center">
         <div class="container mx-auto px-6">
             <img src="logo_azi.png" alt="Logo" class="h-8 mx-auto mb-6 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300">
-            <div class="flex justify-center gap-8 text-2xl text-slate-400 mb-6">
-                <a href="https://www.instagram.com/azicomunicacao/" target="_blank" class="hover:text-[#E1306C] transition transform hover:-translate-y-1"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://wa.me/5563993013005" target="_blank" class="hover:text-[#25D366] transition transform hover:-translate-y-1"><i class="fa-brands fa-whatsapp"></i></a>
-            </div>
-            <p class="text-slate-400 text-xs font-medium">&copy; 2025 Azi Comunicação. Performance & Resultados.</p>
+            <p class="text-slate-400 text-xs font-medium">&copy; 2025 Azi Comunicação.</p>
         </div>
     </footer>
 
     <script>
-        // --- FUNÇÕES LIGHTBOX (ZOOM) ---
-        function openLightbox(src) {
-            const lightbox = document.getElementById('lightbox');
-            const img = document.getElementById('lightbox-img');
-            img.src = src;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden'; 
+        // --- NAVEGAÇÃO SLIDER ---
+        function slide(id, direction) {
+            const container = document.getElementById(`slider-${id}`);
+            const scrollAmount = 320;
+            if (direction === 'left') { container.scrollBy({ left: -scrollAmount, behavior: 'smooth' }); } 
+            else { container.scrollBy({ left: scrollAmount, behavior: 'smooth' }); }
         }
 
-        function closeLightbox(e) {
-            if (e.target.id === 'lightbox' || e.target.id === 'lightbox-close' || e.target.parentElement.id === 'lightbox-close') {
-                document.getElementById('lightbox').classList.remove('active');
-                document.body.style.overflow = 'auto'; 
+        // --- LIGHTBOX ---
+        function openLightbox(type, src) {
+            const lightbox = document.getElementById('lightbox');
+            const content = document.getElementById('lightbox-content');
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            if (type === 'video') {
+                content.innerHTML = `<video controls autoplay class="max-w-full max-h-[90vh] rounded-lg shadow-2xl outline-none"><source src="${src}" type="video/mp4"></video>`;
+            } else {
+                content.innerHTML = `<img src="${src}" alt="Zoom">`;
             }
         }
 
-        // --- FUNÇÕES CALCULADORA ---
+        function closeLightbox(e) {
+            if (e.target.id === 'lightbox' || e.target.parentElement.id === 'lightbox-close' || e.target.id === 'lightbox-close') {
+                document.getElementById('lightbox').classList.remove('active');
+                document.getElementById('lightbox-content').innerHTML = '';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // --- CALCULADORA ---
         function calcularTotal() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             const listaContainer = document.getElementById('lista-selecionados');
@@ -471,45 +410,26 @@
             } else {
                 checkboxes.forEach(cb => {
                     const valor = parseFloat(cb.value);
-                    const nome = cb.getAttribute('data-name');
                     total += valor;
-                    htmlLista += `
-                        <div class="flex justify-between animate-pulse-slow items-center">
-                            <span class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500 text-xs"></i> ${nome}</span>
-                            <span class="font-bold text-white text-xs">R$ ${valor.toLocaleString('pt-BR')}</span>
-                        </div>
-                    `;
+                    htmlLista += `<div class="flex justify-between items-center"><span class="text-xs">${cb.getAttribute('data-name')}</span><span class="font-bold text-xs">R$ ${valor.toLocaleString('pt-BR')}</span></div>`;
                 });
                 listaContainer.innerHTML = htmlLista;
             }
-
             document.getElementById('total-valor').innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
 
         function enviarWhatsApp() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            if (checkboxes.length === 0) {
-                alert("Por favor, selecione pelo menos um serviço para gerar a proposta.");
-                return;
-            }
-
-            let mensagem = "Olá Azi! Gostaria de contratar o seguinte combo:%0A%0A";
+            if (checkboxes.length === 0) { alert("Selecione pelo menos um serviço."); return; }
+            let msg = "Olá Azi! Gostaria de contratar:%0A%0A";
             let total = 0;
-
             checkboxes.forEach(cb => {
-                const valor = parseFloat(cb.value);
-                const nome = cb.getAttribute('data-name');
-                total += valor;
-                mensagem += `✅ ${nome} (R$ ${valor})%0A`;
+                total += parseFloat(cb.value);
+                msg += `✅ ${cb.getAttribute('data-name')} (R$ ${parseFloat(cb.value)})%0A`;
             });
-
-            mensagem += `%0A💰 *Investimento Total: R$ ${total}*%0A%0APodemos fechar?`;
-
-            // NÚMERO CONFIGURADO
-            const numeroWhatsApp = "5563993013005"; 
-            window.open(`https://wa.me/${numeroWhatsApp}?text=${mensagem}`, '_blank');
+            msg += `%0A💰 *Total: R$ ${total}*%0A%0APodemos fechar?`;
+            window.open(`https://wa.me/5563993013005?text=${msg}`, '_blank');
         }
     </script>
-
 </body>
 </html>
