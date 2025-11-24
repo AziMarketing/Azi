@@ -21,7 +21,7 @@
 
         html { scroll-behavior: smooth; }
 
-        /* --- LIGHTBOX (ZOOM NA IMAGEM) --- */
+        /* --- LIGHTBOX (ZOOM) --- */
         #lightbox {
             display: none;
             position: fixed;
@@ -73,10 +73,10 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         
-        /* --- FOTOS EQUIPE (Mantido Original) --- */
+        /* --- FOTOS EQUIPE --- */
         .profile-img {
             width: 260px; height: 260px;
-            object-fit: cover; /* Mantido cover para preencher o círculo */
+            object-fit: cover; /* Cobre o círculo */
             object-position: top center;
             border-radius: 20px;
             border: 4px solid white;
@@ -91,20 +91,19 @@
         }
         .profile-card:hover .profile-img { transform: scale(1.03); }
 
-        /* --- CARROSSEL INFINITO (AJUSTADO) --- */
+        /* --- CARROSSEL INFINITO --- */
         .marquee-container { overflow: hidden; white-space: nowrap; position: relative; }
-        .marquee-content { display: inline-flex; animation: marquee 40s linear infinite; }
+        .marquee-content { display: inline-flex; animation: marquee 50s linear infinite; }
         .marquee-container:hover .marquee-content { animation-play-state: paused; }
 
-        /* Item do Carrossel (Geral) */
         .marquee-item {
             margin-right: 20px;
             border-radius: 12px;
             overflow: hidden;
             flex-shrink: 0;
-            background: #f1f5f9; /* Fundo cinza claro para destacar a imagem */
+            background: #f8fafc;
             border: 1px solid #e2e8f0;
-            cursor: zoom-in; /* Cursor de lupa */
+            cursor: zoom-in;
             transition: transform 0.3s;
             display: flex;
             align-items: center;
@@ -112,18 +111,26 @@
         }
         .marquee-item:hover { transform: scale(1.02); border-color: #16a34a; }
 
-        /* Tamanho para Artes (Quadrado/Retangular) */
-        .item-design { width: 300px; height: 300px; }
+        /* CONFIGURAÇÃO DOS TAMANHOS */
+        
+        /* Design (Quadrado) */
+        .item-design { 
+            width: 300px; 
+            height: 300px; 
+        }
 
-        /* Tamanho para Audiovisual (Horizontal/Paisagem) */
-        .item-audiovisual { width: 400px; height: 225px; } /* Proporção 16:9 */
+        /* Audiovisual (HORIZONTAL / PAISAGEM) - 16:9 */
+        .item-audiovisual { 
+            width: 400px; 
+            height: 225px; 
+        }
 
-        /* IMAGEM DENTRO DO PORTFÓLIO - SEM CORTES */
+        /* Imagem dentro do card (Contain para não cortar nada) */
         .marquee-item img { 
             width: 100%; 
             height: 100%; 
-            object-fit: contain; /* Garante que a imagem inteira apareça */
-            padding: 4px; /* Pequena margem interna */
+            object-fit: contain; 
+            padding: 0; 
         }
         
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -290,12 +297,16 @@
                         <div class="marquee-item item-design"><img src="arte1.png" alt="Design 1" onclick="openLightbox(this.src)"></div>
                         <div class="marquee-item item-design"><img src="arte2.png" alt="Design 2" onclick="openLightbox(this.src)"></div>
                         <div class="marquee-item item-design"><img src="arte3.png" alt="Design 3" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-design"><img src="arte1.png" alt="Design 4" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-design"><img src="arte4.png" alt="Design 4" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-design"><img src="arte5.png" onerror="this.src='arte1.png'" alt="Design 5" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-design"><img src="arte6.png" onerror="this.src='arte2.png'" alt="Design 6" onclick="openLightbox(this.src)"></div>
                         
                         <div class="marquee-item item-design"><img src="arte1.png" alt="Design 1" onclick="openLightbox(this.src)"></div>
                         <div class="marquee-item item-design"><img src="arte2.png" alt="Design 2" onclick="openLightbox(this.src)"></div>
                         <div class="marquee-item item-design"><img src="arte3.png" alt="Design 3" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-design"><img src="arte1.png" alt="Design 4" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-design"><img src="arte4.png" alt="Design 4" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-design"><img src="arte5.png" onerror="this.src='arte1.png'" alt="Design 5" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-design"><img src="arte6.png" onerror="this.src='arte2.png'" alt="Design 6" onclick="openLightbox(this.src)"></div>
                     </div>
                 </div>
             </div>
@@ -304,16 +315,20 @@
                 <h3 class="text-center text-gray-500 text-sm uppercase tracking-widest font-bold mb-6">Produção Audiovisual</h3>
                 
                 <div class="marquee-container w-full py-4">
-                    <div class="marquee-content"> <div class="marquee-item item-audiovisual"><img src="foto1.png" alt="Audiovisual 1" onclick="openLightbox(this.src)"></div>
+                    <div class="marquee-content"> 
+                        <div class="marquee-item item-audiovisual"><img src="foto1.png" alt="Audiovisual 1" onclick="openLightbox(this.src)"></div>
                         <div class="marquee-item item-audiovisual"><img src="foto2.png" alt="Audiovisual 2" onclick="openLightbox(this.src)"></div>
                         <div class="marquee-item item-audiovisual"><img src="foto3.png" alt="Audiovisual 3" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-audiovisual"><img src="foto1.png" alt="Audiovisual 4" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-audiovisual"><img src="foto4.png" alt="Audiovisual 4" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-audiovisual"><img src="foto5.png" onerror="this.src='foto1.png'" alt="Audiovisual 5" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-audiovisual"><img src="foto6.png" onerror="this.src='foto2.png'" alt="Audiovisual 6" onclick="openLightbox(this.src)"></div>
 
                         <div class="marquee-item item-audiovisual"><img src="foto1.png" alt="Audiovisual 1" onclick="openLightbox(this.src)"></div>
                         <div class="marquee-item item-audiovisual"><img src="foto2.png" alt="Audiovisual 2" onclick="openLightbox(this.src)"></div>
                         <div class="marquee-item item-audiovisual"><img src="foto3.png" alt="Audiovisual 3" onclick="openLightbox(this.src)"></div>
-                        <div class="marquee-item item-audiovisual"><img src="foto1.png" alt="Audiovisual 4" onclick="openLightbox(this.src)"></div>
-
+                        <div class="marquee-item item-audiovisual"><img src="foto4.png" alt="Audiovisual 4" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-audiovisual"><img src="foto5.png" onerror="this.src='foto1.png'" alt="Audiovisual 5" onclick="openLightbox(this.src)"></div>
+                        <div class="marquee-item item-audiovisual"><img src="foto6.png" onerror="this.src='foto2.png'" alt="Audiovisual 6" onclick="openLightbox(this.src)"></div>
                     </div>
                 </div>
             </div>
@@ -431,7 +446,6 @@
         }
 
         function closeLightbox(e) {
-            // Fecha se clicar no X ou no fundo preto (não na imagem)
             if (e.target.id === 'lightbox' || e.target.id === 'lightbox-close') {
                 document.getElementById('lightbox').classList.remove('active');
             }
