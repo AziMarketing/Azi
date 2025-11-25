@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Azi Comunicação | Performance & Branding</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -25,33 +28,36 @@
 
     <style>
         body { background-color: #F8FAFC; overflow-x: hidden; }
+        
+        /* Esconde a barra de rolagem dos carrosséis para ficar limpo */
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* --- LIGHTBOX --- */
+        /* --- LIGHTBOX (Zoom) --- */
         #lightbox { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(11, 17, 32, 0.98); backdrop-filter: blur(10px); justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
         #lightbox.active { display: flex; opacity: 1; }
-        #lightbox-content img, #lightbox-content video { max-width: 90vw; max-height: 85vh; border-radius: 8px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); object-fit: contain; }
+        #lightbox-content img, #lightbox-content video { max-width: 95vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); object-fit: contain; }
 
-        /* --- SLIDER (AUTO + MANUAL) --- */
+        /* --- SLIDER (ESTRUTURA) --- */
         .slider-wrapper { position: relative; width: 100%; overflow: hidden; padding: 20px 0; }
-        .slider-track { display: flex; gap: 24px; width: max-content; cursor: grab; }
-        .slider-track:active { cursor: grabbing; }
+        .slider-track { display: flex; gap: 24px; width: max-content; cursor: grab; } /* Cursor de mãozinha */
+        .slider-track:active { cursor: grabbing; } /* Cursor agarrando */
         
         .slider-item {
             flex-shrink: 0; border-radius: 16px; overflow: hidden; background: #f1f5f9; border: 1px solid #e2e8f0;
             cursor: zoom-in; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; position: relative;
         }
         .slider-item:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.15); border-color: #10b981; }
-        /* ALTERAÇÃO AQUI: Usamos object-fit: cover para preencher o espaço vertical */
-        .slider-item img, .slider-item video { width: 100%; height: 100%; object-fit: cover; padding: 0; }
-
-        .item-design { width: 300px; height: 300px; }
         
-        /* NOVO ESTILO PARA FOTOS VERTICAIS */
-        .item-audiovisual-vertical { width: 250px; height: 400px; } /* Formato retrato */
+        /* --- CONFIGURAÇÃO CRÍTICA DAS IMAGENS --- */
+        /* object-fit: contain garante que a imagem apareça inteira sem cortes */
+        .slider-item img, .slider-item video { width: 100%; height: 100%; object-fit: contain; padding: 0; }
 
-        /* --- FOTOS EQUIPE --- */
+        /* Tamanhos dos Cards */
+        .item-design { width: 300px; height: 300px; } /* Quadrado */
+        .item-audiovisual { width: 400px; height: 225px; } /* Horizontal 16:9 */
+
+        /* --- FOTOS EQUIPE (Preenche tudo) --- */
         .profile-img { width: 260px; height: 260px; object-fit: cover; object-position: top center; border-radius: 24px; border: 4px solid white; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15); transition: all 0.4s ease; background-color: #e2e8f0; }
         .profile-img-center { width: 300px; height: 300px; border-color: #10b981; z-index: 10; box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.25); }
         .profile-card:hover .profile-img { transform: translateY(-10px) scale(1.02); }
@@ -128,7 +134,7 @@
                 <div class="w-20 h-1.5 bg-emerald-500 mx-auto rounded-full"></div>
             </div>
             <div class="flex flex-col md:flex-row justify-center items-center md:items-end gap-12 md:gap-8 lg:gap-16 relative pt-10">
-                <div class="profile-card group order-2 md:order-1 relative md:top-8"><div class="relative mx-auto mb-5"><img src="foto_kaio.png" onerror="this.src='https://via.placeholder.com/260x260?text=Kaio+Carvi'" class="profile-img"><div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white border border-slate-100 px-4 py-1.5 rounded-full shadow-lg text-xs font-bold text-slate-800 uppercase whitespace-nowrap">Sócio Fundador</div></div><h4 class="text-xl font-bold text-slate-900">Kaio Carvi</h4><p class="text-sm text-emerald-600 font-semibold">Comercial & Operações</p></div>
+                <div class="profile-card group order-2 md:order-1 relative md:top-8"><div class="relative mx-auto mb-5"><img src="foto_kaio.png" onerror="this.src='https://via.placeholder.com/260x260?text=Kaio'" class="profile-img"><div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white border border-slate-100 px-4 py-1.5 rounded-full shadow-lg text-xs font-bold text-slate-800 uppercase whitespace-nowrap">Sócio Fundador</div></div><h4 class="text-xl font-bold text-slate-900">Kaio Carvi</h4><p class="text-sm text-emerald-600 font-semibold">Comercial & Operações</p></div>
                 <div class="profile-card group order-1 md:order-2 relative md:-top-4 z-10"><div class="relative mx-auto mb-6"><img src="foto_iago.png" onerror="this.src='https://via.placeholder.com/300x300?text=Iago'" class="profile-img profile-img-center"><div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-emerald-600 text-white px-6 py-2 rounded-full shadow-xl text-sm font-bold uppercase whitespace-nowrap">Sócio Fundador</div></div><h4 class="text-3xl font-bold text-slate-900">Iago Manguary</h4><p class="text-base text-emerald-600 font-bold">Estratégia & Gestão</p></div>
                 <div class="profile-card group order-3 md:order-3 relative md:top-8"><div class="relative mx-auto mb-5"><img src="foto_natalia.png" onerror="this.src='https://via.placeholder.com/260x260?text=Natalia'" class="profile-img"><div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white border border-slate-100 px-4 py-1.5 rounded-full shadow-lg text-xs font-bold text-slate-800 uppercase whitespace-nowrap">Sócio Fundador</div></div><h4 class="text-xl font-bold text-slate-900">Natália Azevedo</h4><p class="text-sm text-emerald-600 font-semibold">Criação & Branding</p></div>
             </div>
@@ -140,18 +146,40 @@
                     <div class="text-center">
                         <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6 mx-auto"><i class="fa-solid fa-bolt"></i></div>
                         <h3 class="text-xl font-bold text-slate-900 mb-3">Agilidade na Entrega</h3>
-                        <p class="text-slate-500 text-sm">Processos modernos e enxutos. Começamos a trabalhar na sua marca no mesmo dia.</p>
+                        <p class="text-slate-500 text-sm">Não perdemos tempo. Do briefing à entrega, nosso processo é otimizado para você começar a vender logo.</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-6 mx-auto"><i class="fa-solid fa-hand-holding-dollar"></i></div>
                         <h3 class="text-xl font-bold text-slate-900 mb-3">Custo x Benefício</h3>
-                        <p class="text-slate-500 text-sm">Preços justos para quem está começando, com qualidade de agência grande.</p>
+                        <p class="text-slate-500 text-sm">Planos modulares que se adaptam ao seu orçamento. Você paga apenas pelo que seu negócio precisa.</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-6 mx-auto"><i class="fa-solid fa-chart-line"></i></div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">Foco em Vendas</h3>
-                        <p class="text-slate-500 text-sm">Não queremos apenas likes. Nossas estratégias são focadas em trazer clientes reais.</p>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Foco em Resultados</h3>
+                        <p class="text-slate-500 text-sm">Design bonito é bom, mas design que vende é melhor. Nossas estratégias são focadas em conversão.</p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-32 text-center">
+            <h2 class="text-3xl font-bold text-slate-900 mb-12">Como Funciona?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto relative">
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-slate-100 -z-10 -translate-y-1/2"></div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
+                    <div class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">1</div>
+                    <h4 class="font-bold text-lg mb-2">Escolha o Pacote</h4>
+                    <p class="text-sm text-slate-500">Selecione os serviços ideais no nosso simulador abaixo.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
+                    <div class="w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">2</div>
+                    <h4 class="font-bold text-lg mb-2">Briefing Rápido</h4>
+                    <p class="text-sm text-slate-500">Entendemos sua necessidade e alinhamos a estratégia.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
+                    <div class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">3</div>
+                    <h4 class="font-bold text-lg mb-2">Entrega & Resultado</h4>
+                    <p class="text-sm text-slate-500">Receba seus materiais e comece a divulgar.</p>
                 </div>
             </div>
         </section>
@@ -240,12 +268,25 @@
     </footer>
 
     <script>
-        const designImages = ['arte1.png', 'arte2.png', 'arte3.png', 'arte4.png', 'arte5.png', 'arte6.png'];
-        const audioImages = [{type:'video',src:'video1.mp4'}, {type:'img',src:'foto1.png'}, {type:'img',src:'foto2.png'}, {type:'img',src:'foto3.png'}, {type:'img',src:'foto4.png'}, {type:'img',src:'foto5.png'}, {type:'img',src:'foto6.png'}, {type:'img',src:'foto7.png'}, {type:'img',src:'foto8.png'}, {type:'img',src:'foto9.png'}, {type:'img',src:'foto10.png'}, {type:'img',src:'foto11.png'}];
+        /* --- DADOS DINÂMICOS DO PORTFÓLIO --- */
+        
+        // Artes de Design (Quadrado)
+        const designImages = ['arte1.png', 'arte2.png', 'arte3.png', 'arte4.png', 'arte5.png'];
+        
+        // Audiovisual (Video + Fotos Horizontais 16:9)
+        const audioImages = [
+            {type:'video',src:'video1.mp4'},
+            {type:'img',src:'foto1.png'}, {type:'img',src:'foto2.png'}, {type:'img',src:'foto3.png'}, 
+            {type:'img',src:'foto4.png'}, {type:'img',src:'foto5.png'}, {type:'img',src:'foto6.png'},
+            {type:'img',src:'foto7.png'}, {type:'img',src:'foto8.png'}, {type:'img',src:'foto9.png'},
+            {type:'img',src:'foto10.png'}, {type:'img',src:'foto11.png'}
+        ];
 
+        // Função para gerar os carrosséis
         function initSlider(trackId, items, typeClass) {
             const track = document.getElementById(trackId);
             let content = '';
+            // Triplica a lista para dar a ilusão de loop infinito
             [...items, ...items, ...items].forEach(item => {
                 if(item.type === 'video') {
                     content += `<div class="slider-item ${typeClass} relative group" onclick="openLightbox('video', '${item.src}')"><video autoplay muted loop playsinline class="pointer-events-none w-full h-full object-cover"><source src="${item.src}" type="video/mp4"></video><div class="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/30 transition"><div class="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg"><i class="fa-solid fa-play text-emerald-600 ml-1"></i></div></div></div>`;
@@ -257,16 +298,18 @@
             track.innerHTML = content;
         }
         initSlider('track-design', designImages, 'item-design');
-        // MUDANÇA AQUI: Usando a nova classe para fotos verticais
-        initSlider('track-audio', audioImages, 'item-audiovisual-vertical');
+        initSlider('track-audio', audioImages, 'item-audiovisual');
 
+        // --- LÓGICA DE AUTO SCROLL (SEM BOTÕES) ---
         const sliders = { design: { id: 'slider-design', speed: 0.5, active: true }, audio: { id: 'slider-audio', speed: 0.5, active: true } };
+        
         function autoScroll() {
             for(let key in sliders) {
                 const s = sliders[key];
                 const el = document.getElementById(s.id);
                 if(s.active && el) {
                     el.scrollLeft += s.speed;
+                    // Reset suave para loop infinito
                     if(el.scrollLeft >= (el.scrollWidth - el.clientWidth) / 2) el.scrollLeft = 0;
                 }
             }
@@ -277,6 +320,7 @@
         function pauseScroll(key) { sliders[key].active = false; }
         function resumeScroll(key) { sliders[key].active = true; }
 
+        // --- LÓGICA DO LIGHTBOX ---
         function openLightbox(type, src) {
             const box = document.getElementById('lightbox');
             const content = document.getElementById('lightbox-content');
@@ -291,6 +335,7 @@
             }
         }
 
+        // --- CALCULADORA SIMPLES ---
         function calcularTotal() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             const list = document.getElementById('lista-selecionados');
@@ -306,6 +351,7 @@
             document.getElementById('total-valor').innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
 
+        // --- WHATSAPP ---
         function enviarWhatsApp() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             if(checkboxes.length === 0) return alert("Selecione pelo menos um serviço.");
