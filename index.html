@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carvi Digital | Performance & Branding</title>
+    <title>Azi Comunicação | Performance & Branding</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
@@ -28,14 +26,13 @@
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* --- LIGHTBOX --- */
+        /* Lightbox */
         #lightbox { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(11, 17, 32, 0.98); backdrop-filter: blur(10px); justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
         #lightbox.active { display: flex; opacity: 1; }
         #lightbox-content img, #lightbox-content video { max-width: 90vw; max-height: 85vh; border-radius: 8px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); object-fit: contain; }
 
-        /* --- SLIDER (APENAS AUTO) --- */
+        /* Slider (Auto) */
         .slider-wrapper { position: relative; width: 100%; overflow: hidden; padding: 20px 0; }
-        /* Cursor grab indica que pode arrastar (mobile/desktop) */
         .slider-track { display: flex; gap: 24px; width: max-content; cursor: grab; } 
         .slider-track:active { cursor: grabbing; }
         
@@ -49,12 +46,12 @@
         .item-design { width: 300px; height: 300px; }
         .item-audiovisual { width: 400px; height: 225px; }
 
-        /* --- FOTOS EQUIPE --- */
+        /* Fotos Equipe */
         .profile-img { width: 260px; height: 260px; object-fit: cover; object-position: top center; border-radius: 24px; border: 4px solid white; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15); transition: all 0.4s ease; background-color: #e2e8f0; }
         .profile-img-center { width: 300px; height: 300px; border-color: #10b981; z-index: 10; box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.25); }
         .profile-card:hover .profile-img { transform: translateY(-10px) scale(1.02); }
 
-        /* --- CHECKBOX --- */
+        /* Checkbox */
         .checkbox-wrapper input:checked + div { background-color: #ecfdf5; border-color: #10b981; color: #065f46; box-shadow: 0 0 0 1px #10b981; }
         .service-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.1); border-color: #10b981; }
     </style>
@@ -74,14 +71,14 @@
     <nav class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-40 border-b border-slate-100">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <img src="logo_carvi.png" onerror="this.src='https://via.placeholder.com/150x50?text=Carvi+Digital'; this.onerror=null;" alt="Carvi Digital" class="h-10 w-auto object-contain hover:opacity-80 transition">
+                <img src="logo_azi.png" alt="Azi" class="h-10 w-auto object-contain hover:opacity-80 transition">
             </div>
             <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
                 <a href="#quem-somos" class="hover:text-emerald-600 transition">Quem Somos</a>
                 <a href="#servicos" class="hover:text-emerald-600 transition">Serviços</a>
                 <a href="#portfolio" class="hover:text-emerald-600 transition">Portfólio</a>
                 <div class="h-4 w-px bg-slate-300 mx-2"></div>
-                <a href="https://www.instagram.com/carvidigital/" target="_blank" class="text-slate-400 hover:text-[#E1306C] transition text-xl" title="Siga nosso Instagram">
+                <a href="https://www.instagram.com/azicomunicacao/" target="_blank" class="text-slate-400 hover:text-[#E1306C] transition text-xl" title="Siga nosso Instagram">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
             </div>
@@ -96,13 +93,13 @@
 
         <div class="container mx-auto px-6 relative z-10 text-center max-w-4xl">
             <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/10 text-emerald-300 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-8 hover:bg-white/10 transition">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Agência de Performance
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Marketing de Performance
             </div>
             <h1 class="text-5xl md:text-7xl font-extrabold mb-8 leading-tight tracking-tight">
-                Acelere seus resultados com a <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Carvi Digital.</span>
+                Transforme cliques em <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">faturamento real.</span>
             </h1>
             <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-12 font-light">
-                Estratégias modernas de Tráfego, Branding e Social Media para empresas que querem crescer rápido.
+                Acelere seu negócio com estratégias validadas de Tráfego Pago, Branding e Social Media.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <a href="#orcamento" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-4 px-10 rounded-xl transition shadow-xl shadow-emerald-500/20">Simular Investimento</a>
@@ -114,10 +111,10 @@
     <main class="container mx-auto px-6 py-24 max-w-7xl">
 
         <section class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center mb-32 border-b border-slate-200 pb-12">
-            <div><h3 class="text-4xl font-extrabold text-slate-900 mb-2">+50</h3><p class="text-sm text-slate-500 font-medium uppercase">Clientes Atendidos</p></div>
+            <div><h3 class="text-4xl font-extrabold text-slate-900 mb-2">+15</h3><p class="text-sm text-slate-500 font-medium uppercase">Projetos Entregues</p></div>
             <div><h3 class="text-4xl font-extrabold text-slate-900 mb-2">24/7</h3><p class="text-sm text-slate-500 font-medium uppercase">Suporte Dedicado</p></div>
-            <div><h3 class="text-4xl font-extrabold text-slate-900 mb-2">+100k</h3><p class="text-sm text-slate-500 font-medium uppercase">Pessoas Alcançadas</p></div>
-            <div><h3 class="text-4xl font-extrabold text-slate-900 mb-2">100%</h3><p class="text-sm text-slate-500 font-medium uppercase">Foco em Crescimento</p></div>
+            <div><h3 class="text-4xl font-extrabold text-slate-900 mb-2">+50k</h3><p class="text-sm text-slate-500 font-medium uppercase">Pessoas Alcançadas</p></div>
+            <div><h3 class="text-4xl font-extrabold text-slate-900 mb-2">100%</h3><p class="text-sm text-slate-500 font-medium uppercase">Foco em Vendas</p></div>
         </section>
 
         <section id="quem-somos" class="mb-40 text-center scroll-mt-32">
@@ -125,24 +122,33 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">Quem faz acontecer</h2>
                 <div class="w-20 h-1.5 bg-emerald-500 mx-auto rounded-full"></div>
             </div>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-12 relative pt-10">
+            <div class="flex flex-col md:flex-row justify-center items-center md:items-end gap-12 md:gap-8 lg:gap-16 relative pt-10">
                 
-                <div class="profile-card group relative">
+                <div class="profile-card group order-2 md:order-1 relative md:top-8">
                     <div class="relative mx-auto mb-5">
-                        <img src="foto_kaio.png" onerror="this.src='https://via.placeholder.com/260x260?text=Kaio+Carvi'" class="profile-img profile-img-center">
-                        <div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-emerald-600 text-white px-6 py-1.5 rounded-full shadow-lg text-xs font-bold uppercase whitespace-nowrap">Fundador</div>
+                        <img src="foto_kaio.png" alt="Kaio Carvi" class="profile-img">
+                        <div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white border border-slate-100 px-4 py-1.5 rounded-full shadow-lg text-xs font-bold text-slate-800 uppercase whitespace-nowrap">Sócio Fundador</div>
                     </div>
                     <h4 class="text-xl font-bold text-slate-900">Kaio Carvi</h4>
-                    <p class="text-sm text-emerald-600 font-semibold">Estrategista & Diretor</p>
+                    <p class="text-sm text-emerald-600 font-semibold">Comercial & Operações</p>
                 </div>
-                
-                <div class="profile-card group relative">
-                    <div class="relative mx-auto mb-5">
-                        <img src="foto_socio2.png" onerror="this.src='https://via.placeholder.com/260x260?text=Sócio+2'" class="profile-img">
-                        <div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white border border-slate-100 px-4 py-1.5 rounded-full shadow-lg text-xs font-bold text-slate-800 uppercase whitespace-nowrap">Co-Fundador</div>
+
+                <div class="profile-card group order-1 md:order-2 relative md:-top-4 z-10">
+                    <div class="relative mx-auto mb-6">
+                        <img src="foto_iago.png" alt="Iago Manguary" class="profile-img profile-img-center">
+                        <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-emerald-600 text-white px-6 py-2 rounded-full shadow-xl text-sm font-bold uppercase whitespace-nowrap">Sócio Fundador</div>
                     </div>
-                    <h4 class="text-xl font-bold text-slate-900">Nome do Sócio</h4>
-                    <p class="text-sm text-emerald-600 font-semibold">Área de Atuação</p>
+                    <h4 class="text-3xl font-bold text-slate-900">Iago Manguary</h4>
+                    <p class="text-base text-emerald-600 font-bold">Estratégia & Gestão</p>
+                </div>
+
+                <div class="profile-card group order-3 md:order-3 relative md:top-8">
+                    <div class="relative mx-auto mb-5">
+                        <img src="foto_natalia.png" alt="Natália Azevedo" class="profile-img">
+                        <div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white border border-slate-100 px-4 py-1.5 rounded-full shadow-lg text-xs font-bold text-slate-800 uppercase whitespace-nowrap">Sócio Fundador</div>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900">Natália Azevedo</h4>
+                    <p class="text-sm text-emerald-600 font-semibold">Criação & Branding</p>
                 </div>
 
             </div>
@@ -153,41 +159,19 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                     <div class="text-center">
                         <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6 mx-auto"><i class="fa-solid fa-bolt"></i></div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">Agilidade de Startup</h3>
-                        <p class="text-slate-500 text-sm">Processos enxutos e rápidos. Entregamos valor desde o primeiro dia.</p>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Agilidade na Entrega</h3>
+                        <p class="text-slate-500 text-sm">Processos modernos e enxutos. Começamos a trabalhar na sua marca no mesmo dia.</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-6 mx-auto"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">Investimento Inteligente</h3>
-                        <p class="text-slate-500 text-sm">Soluções acessíveis e modulares, focadas no que realmente traz retorno.</p>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Custo x Benefício</h3>
+                        <p class="text-slate-500 text-sm">Preços justos para quem está começando, com qualidade de agência grande.</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-6 mx-auto"><i class="fa-solid fa-chart-line"></i></div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">Foco em Resultados</h3>
-                        <p class="text-slate-500 text-sm">Não queremos apenas likes, queremos gerar vendas e crescimento real.</p>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Foco em Vendas</h3>
+                        <p class="text-slate-500 text-sm">Não queremos apenas likes. Nossas estratégias são focadas em trazer clientes reais.</p>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="mb-32 text-center">
-            <h2 class="text-3xl font-bold text-slate-900 mb-12">Como Funciona?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto relative">
-                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-slate-100 -z-10 -translate-y-1/2"></div>
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
-                    <div class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">1</div>
-                    <h4 class="font-bold text-lg mb-2">Escolha o Pacote</h4>
-                    <p class="text-sm text-slate-500">Selecione os serviços ideais no nosso simulador abaixo.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
-                    <div class="w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">2</div>
-                    <h4 class="font-bold text-lg mb-2">Alinhamento Rápido</h4>
-                    <p class="text-sm text-slate-500">Fazemos uma reunião breve para entender seus objetivos.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
-                    <div class="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">3</div>
-                    <h4 class="font-bold text-lg mb-2">Execução & Resultado</h4>
-                    <p class="text-sm text-slate-500">Iniciamos os trabalhos e você acompanha o crescimento.</p>
                 </div>
             </div>
         </section>
@@ -200,39 +184,39 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="service-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl relative group">
                     <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-6 text-2xl"><i class="fa-brands fa-instagram"></i></div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-2">Social Media (Essencial)</h3>
-                    <p class="text-sm text-slate-500 mb-6">8 posts/mês + 4 Stories semanais. Ideal para manter uma presença digital consistente.</p>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Social Media (Start)</h3>
+                    <p class="text-sm text-slate-500 mb-6">Planejamento de 8 posts mensais + 4 Stories/semana. Ideal para manter presença de marca.</p>
                     <div class="border-t border-slate-100 pt-4 flex justify-between items-center"><span class="text-xs text-slate-400 font-bold uppercase">Mensal</span><span class="text-2xl font-bold text-slate-800">R$ 450</span></div>
                 </div>
                 <div class="service-card bg-white p-8 rounded-2xl border-2 border-emerald-500 shadow-xl relative overflow-hidden transform md:-translate-y-2">
-                    <div class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase">Recomendado</div>
+                    <div class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase">Popular</div>
                     <div class="w-14 h-14 bg-emerald-600 text-white rounded-xl flex items-center justify-center mb-6 text-2xl"><i class="fa-solid fa-rocket"></i></div>
                     <h3 class="text-xl font-bold text-slate-800 mb-2">Social Growth</h3>
-                    <p class="text-sm text-slate-500 mb-6">12 posts/mês, 4 Reels, Gestão de Comunidade e Relatório de desempenho mensal.</p>
+                    <p class="text-sm text-slate-500 mb-6">Estratégia completa: 12 posts/mês, 4 Reels, Gestão de Comunidade e Relatórios.</p>
                     <div class="border-t border-emerald-100 pt-4 flex justify-between items-center"><span class="text-xs text-slate-400 font-bold uppercase">Mensal</span><span class="text-2xl font-bold text-emerald-600">R$ 850</span></div>
                 </div>
                 <div class="service-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl group">
                     <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6 text-2xl"><i class="fa-solid fa-bullseye"></i></div>
                     <h3 class="text-xl font-bold text-slate-800 mb-2">Gestão de Tráfego</h3>
-                    <p class="text-sm text-slate-500 mb-6">Criação e otimização de campanhas (Google/Meta Ads) focadas em leads e vendas.</p>
+                    <p class="text-sm text-slate-500 mb-6">Campanhas de alta performance no Google e Meta Ads focadas em gerar leads e vendas.</p>
                     <div class="border-t border-slate-100 pt-4 flex justify-between items-center"><span class="text-xs text-slate-400 font-bold uppercase">Taxa Gestão</span><span class="text-2xl font-bold text-slate-800">R$ 600</span></div>
                 </div>
                 <div class="service-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl group">
                     <div class="w-14 h-14 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center mb-6 text-2xl"><i class="fa-solid fa-pen-ruler"></i></div>
                     <h3 class="text-xl font-bold text-slate-800 mb-2">Pack 5 Artes</h3>
-                    <p class="text-sm text-slate-500 mb-6">Pacote de 5 artes profissionais avulsas para suas campanhas ou uso livre.</p>
+                    <p class="text-sm text-slate-500 mb-6">Pacote de 5 artes profissionais avulsas para campanhas ou uso livre.</p>
                     <div class="border-t border-slate-100 pt-4 flex justify-between items-center"><span class="text-xs text-slate-400 font-bold uppercase">Único</span><span class="text-2xl font-bold text-slate-800">R$ 250</span></div>
                 </div>
                 <div class="service-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl group">
                     <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-6 text-2xl"><i class="fa-solid fa-map-location-dot"></i></div>
                     <h3 class="text-xl font-bold text-slate-800 mb-2">Google Meu Negócio</h3>
-                    <p class="text-sm text-slate-500 mb-6">Otimização completa da sua ficha para aparecer nas buscas locais.</p>
+                    <p class="text-sm text-slate-500 mb-6">Otimização completa da sua ficha para aparecer no topo das buscas locais.</p>
                     <div class="border-t border-slate-100 pt-4 flex justify-between items-center"><span class="text-xs text-slate-400 font-bold uppercase">Único</span><span class="text-2xl font-bold text-slate-800">R$ 350</span></div>
                 </div>
                 <div class="service-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl group">
                     <div class="w-14 h-14 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center mb-6 text-2xl"><i class="fa-solid fa-fingerprint"></i></div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-2">Identidade Visual</h3>
-                    <p class="text-sm text-slate-500 mb-6">Criação de logotipo profissional, paleta de cores e tipografia.</p>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Logo Express</h3>
+                    <p class="text-sm text-slate-500 mb-6">Criação de identidade visual rápida (Logo + Variações + Paleta de Cores).</p>
                     <div class="border-t border-slate-100 pt-4 flex justify-between items-center"><span class="text-xs text-slate-400 font-bold uppercase">Único</span><span class="text-2xl font-bold text-slate-800">R$ 500</span></div>
                 </div>
             </div>
@@ -269,12 +253,12 @@
                     <h3 class="text-2xl font-bold text-slate-800 mb-2">Simulador</h3>
                     <p class="text-slate-500 mb-8 text-sm">Selecione os itens:</p>
                     <div class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
-                        <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="450" data-name="Social Media (Essencial)" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Social Media (Essencial)</span><div class="font-bold text-sm text-slate-600">R$ 450</div></div></label>
+                        <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="450" data-name="Social Media (Start)" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Social Media (Start)</span><div class="font-bold text-sm text-slate-600">R$ 450</div></div></label>
                         <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="850" data-name="Social Growth" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Social Growth</span><div class="font-bold text-sm text-slate-600">R$ 850</div></div></label>
                         <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="600" data-name="Gestão de Tráfego" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Gestão de Tráfego</span><div class="font-bold text-sm text-slate-600">R$ 600</div></div></label>
                         <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="250" data-name="Pack 5 Artes" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Pack 5 Artes</span><div class="font-bold text-sm text-slate-600">R$ 250</div></div></label>
                         <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="350" data-name="Google Meu Negócio" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Google Meu Negócio</span><div class="font-bold text-sm text-slate-600">R$ 350</div></div></label>
-                        <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="500" data-name="Identidade Visual" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Identidade Visual</span><div class="font-bold text-sm text-slate-600">R$ 500</div></div></label>
+                        <label class="checkbox-wrapper cursor-pointer block group"><input type="checkbox" class="hidden" value="500" data-name="Logo Express" onchange="calcularTotal()"><div class="border border-slate-200 rounded-xl p-4 flex justify-between items-center group-hover:border-emerald-400 transition bg-slate-50/50"><span class="font-semibold text-sm text-slate-700">Logo Express</span><div class="font-bold text-sm text-slate-600">R$ 500</div></div></label>
                     </div>
                 </div>
                 <div class="bg-azi-dark p-8 md:p-12 text-white flex flex-col justify-between relative">
@@ -297,32 +281,28 @@
 
     <footer class="bg-white border-t border-slate-200 py-12 text-center">
         <div class="container mx-auto px-6">
-            <img src="logo_carvi.png" onerror="this.src='https://via.placeholder.com/150x50?text=Carvi+Digital'; this.onerror=null;" alt="Carvi Digital" class="h-8 mx-auto mb-6 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300">
+            <img src="logo_azi.png" alt="Logo" class="h-8 mx-auto mb-6 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300">
             <div class="flex justify-center gap-8 text-2xl text-slate-400 mb-6">
-                <a href="https://www.instagram.com/carvidigital/" target="_blank" class="hover:text-[#E1306C] transition transform hover:-translate-y-1"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.instagram.com/azicomunicacao/" target="_blank" class="hover:text-[#E1306C] transition transform hover:-translate-y-1"><i class="fa-brands fa-instagram"></i></a>
                 <a href="https://wa.me/5563993013005" target="_blank" class="hover:text-[#25D366] transition transform hover:-translate-y-1"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
-            <p class="text-slate-400 text-xs font-medium">&copy; 2024 Carvi Digital. Todos os direitos reservados.</p>
+            <p class="text-slate-400 text-xs font-medium">&copy; 2025 Azi Comunicação.</p>
         </div>
     </footer>
 
     <script>
-        // --- DADOS E RENDERIZAÇÃO ---
-        // IMPORTANTE: Salve suas imagens na mesma pasta do arquivo HTML com esses nomes exatos
         const designImages = ['arte1.png', 'arte2.png', 'arte3.png', 'arte4.png', 'arte5.png', 'arte6.png'];
         const audioImages = [{type:'video',src:'video1.mp4'}, {type:'img',src:'foto1.png'}, {type:'img',src:'foto2.png'}, {type:'img',src:'foto3.png'}, {type:'img',src:'foto4.png'}, {type:'img',src:'foto5.png'}];
 
         function initSlider(trackId, items, typeClass) {
             const track = document.getElementById(trackId);
             let content = '';
-            // Triplicamos a lista para garantir scroll infinito suave
             [...items, ...items, ...items].forEach(item => {
                 if(item.type === 'video') {
                     content += `<div class="slider-item ${typeClass} relative group" onclick="openLightbox('video', '${item.src}')"><video autoplay muted loop playsinline class="pointer-events-none w-full h-full object-cover"><source src="${item.src}" type="video/mp4"></video><div class="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/30 transition"><div class="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg"><i class="fa-solid fa-play text-emerald-600 ml-1"></i></div></div></div>`;
                 } else {
                     const src = item.src || item;
-                    // Adicionei um placeholder de erro para você saber qual imagem não carregou
-                    content += `<div class="slider-item ${typeClass}" onclick="openLightbox('img', '${src}')"><img src="${src}" onerror="this.src='https://via.placeholder.com/300x300?text=Imagem+Não+Encontrada'" alt="Portfolio"></div>`;
+                    content += `<div class="slider-item ${typeClass}" onclick="openLightbox('img', '${src}')"><img src="${src}" alt="Portfolio"></div>`;
                 }
             });
             track.innerHTML = content;
@@ -330,30 +310,23 @@
         initSlider('track-design', designImages, 'item-design');
         initSlider('track-audio', audioImages, 'item-audiovisual');
 
-        // --- SCROLL AUTO (LOOP INFINITO) ---
         const sliders = { design: { id: 'slider-design', speed: 0.5, active: true }, audio: { id: 'slider-audio', speed: 0.5, active: true } };
-        
         function autoScroll() {
             for(let key in sliders) {
                 const s = sliders[key];
                 const el = document.getElementById(s.id);
                 if(s.active && el) {
                     el.scrollLeft += s.speed;
-                    // Reset suave para loop infinito (quando chega na metade do conteúdo triplicado, volta pro início)
-                    if(el.scrollLeft >= (el.scrollWidth - el.clientWidth) / 2) {
-                        el.scrollLeft = 0;
-                    }
+                    if(el.scrollLeft >= (el.scrollWidth - el.clientWidth) / 2) el.scrollLeft = 0;
                 }
             }
             requestAnimationFrame(autoScroll);
         }
         autoScroll();
 
-        // Pausa o scroll ao passar o mouse
         function pauseScroll(key) { sliders[key].active = false; }
         function resumeScroll(key) { sliders[key].active = true; }
 
-        // --- LIGHTBOX ---
         function openLightbox(type, src) {
             const box = document.getElementById('lightbox');
             const content = document.getElementById('lightbox-content');
@@ -368,7 +341,6 @@
             }
         }
 
-        // --- CALCULADORA ---
         function calcularTotal() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             const list = document.getElementById('lista-selecionados');
@@ -387,10 +359,10 @@
         function enviarWhatsApp() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             if(checkboxes.length === 0) return alert("Selecione pelo menos um serviço.");
-            let msg = "Olá Carvi Digital! Gostaria de contratar:%0A%0A";
+            let msg = "Olá Azi! Gostaria de contratar:%0A%0A";
             let total = 0;
             checkboxes.forEach(cb => { total += parseFloat(cb.value); msg += `✅ ${cb.getAttribute('data-name')} (R$ ${cb.value})%0A`; });
-            msg += `%0A💰 *Total Estimado: R$ ${total}*%0A%0APodemos agendar uma conversa?`;
+            msg += `%0A💰 *Total: R$ ${total}*%0A%0APodemos fechar?`;
             window.open(`https://wa.me/5563993013005?text=${msg}`, '_blank');
         }
     </script>
